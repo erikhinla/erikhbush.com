@@ -969,8 +969,8 @@ body:before{
 .hang-play{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);min-width:64px;min-height:64px;border-radius:50%;display:grid;place-items:center;background:#e8b68f;color:#101111;font-size:13px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
 .hang-film-door:hover .hang-play,.hang-film-door:focus-visible .hang-play{background:#f4eee5}
 .hang-recap-note{margin:.75rem 0 0;font-size:14px;color:#c8c3bd}
-.hang-pass{margin:32px 0 8px;max-width:42ch}
-.hang-pass p{margin:0 0 12px;font-size:18px;color:#e2dfda}
+.pass-after{margin:28px 0 0;font-size:15px;color:#b7b1a8}
+.pass-after .text-action{margin-left:6px;color:#e8b68f}
 .bill h1,.bill h2,.carry-line,.carry-next,.routes-head,.said,.gift-line,.readout-close,.result-reass,.proof-kicker{
   text-wrap:pretty;
   text-wrap:balance;

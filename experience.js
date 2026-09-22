@@ -27,7 +27,7 @@ function mountInfra(){
  box.className='infra';
  const hangHref=onLife?'/story#wall':'#gallery';
  const hangOpen=onLife?'':'data-open="gallery"';
- box.innerHTML=`<summary class="infra-trace" aria-label="INFRA"><span></span></summary><nav aria-label="INFRA"><p class="infra-word">INFRA</p><a class="infra-lane" data-lane="life" href="${life}">Life</a><a class="infra-child" data-lane="life" href="${daily}">De-Fog</a><a class="infra-lane" data-lane="biz" href="${onLife?'https://transformby10x.ai/bbai':'/bbai'}">Business</a><a class="infra-child" data-lane="biz" href="${proof}">PROOF</a><a class="infra-me" href="${me}">How we got here</a><a class="infra-child" href="${me}#notes">Field notes</a><a class="infra-child infra-hang" href="${hangHref}" ${hangOpen}>The hang</a></nav>`;
+ box.innerHTML=`<summary class="infra-trace" aria-label="INFRA"><span></span></summary><nav aria-label="INFRA"><p class="infra-word">INFRA</p><a class="infra-lane" data-lane="life" href="${life}">Life</a><a class="infra-child" data-lane="life" href="${daily}">De-Fog</a><a class="infra-lane" data-lane="biz" href="${onLife?'https://transformby10x.ai/bbai':'/bbai'}">Work</a><a class="infra-child" data-lane="biz" href="${proof}">PROOF</a><a class="infra-me" href="${me}">How we got here</a><a class="infra-child" href="${me}#notes">Field notes</a><a class="infra-child infra-hang" href="${hangHref}" ${hangOpen}>The hang</a></nav>`;
  document.body.append(mark,box);
  box.querySelectorAll('nav a').forEach(el=>el.addEventListener('click',()=>box.removeAttribute('open')));
  markInfra();

@@ -22,21 +22,25 @@ body{font-family:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
 .bridge h2{max-width:16ch;font-size:clamp(1.7rem,4.2vw,2.6rem);margin:10px 0 1.6rem;line-height:1.14;letter-spacing:-.02em;text-transform:none}
 .closing h2{max-width:16ch;font-size:clamp(1.7rem,4.2vw,2.6rem);line-height:1.14;letter-spacing:-.02em;margin:10px 0 1.4rem}
 .closing{min-height:100dvh;height:auto;justify-content:flex-start;padding:0;align-items:stretch}
-#notes.storm{display:block;padding:0;min-height:0}
+.storm-room{position:relative;display:block;padding:0;min-height:100dvh;color:#f6f1e6}
 .storm-world{position:sticky;top:0;height:100dvh;z-index:0;overflow:hidden}
-.storm-world img{width:100%;height:100%;object-fit:cover;object-position:50% 58%;filter:saturate(.9) contrast(1.05)}
-.storm-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,10,.62) 0%,rgba(6,8,10,.28) 42%,rgba(6,8,10,.7) 100%)}
-.storm-plate{position:relative;z-index:1;margin-top:-100dvh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:12vh 6vw;color:#f6f1e6;text-shadow:0 2px 28px rgba(0,0,0,.55)}
-.storm-plate .chapter{letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:#e4c48a;margin-bottom:1.2rem}
-#notes .storm-plate h2{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;font-weight:400;font-size:clamp(4.2rem,14vw,9rem);letter-spacing:-.045em;line-height:.9;margin:0;max-width:none;text-transform:none;font-style:italic;color:#f7f0e2}
-.storm-for{font-family:"Fraunces",Georgia,serif;font-style:italic;font-weight:400;font-size:clamp(1.15rem,2.2vw,1.55rem);margin:1.1rem 0 0;color:#f0e6d2}
-.storm-for:before,.storm-for:after{content:"";display:block;width:48px;height:1px;background:rgba(228,196,138,.7);margin:18px auto}
-.storm-essay{position:relative;z-index:1;width:min(42rem,92vw);margin:0 auto;padding:8vh 0 22vh;color:#f6f1e6;text-align:center;text-shadow:0 1px 16px rgba(0,0,0,.6)}
-.storm-essay p{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto;font-weight:400;font-size:clamp(1.08rem,1.35vw,1.28rem);line-height:1.72;margin:0 0 1.45rem;text-wrap:pretty}
-.storm-essay > p:first-of-type::first-letter{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:3.6em;float:left;line-height:.72;padding:.12em .1em 0 0;color:#e8d4a4}
-.storm-turn{display:block;font-style:italic;font-size:clamp(1.28rem,2vw,1.6rem);line-height:1.4;margin:2.4rem 0;color:#f3e6c8}
-.storm-credit{margin-top:2.6rem;font-size:.92rem;font-style:italic;letter-spacing:.02em;color:rgba(246,241,230,.8)}
-.storm-log{position:relative;z-index:1;padding:70px 6vw 80px;background:#0c0d0b}
+.storm-world img{width:100%;height:100%;object-fit:cover;object-position:50% 62%;filter:saturate(.85) contrast(1.08)}
+.storm-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,8,10,.55) 0%,rgba(6,8,10,.35) 38%,rgba(6,8,10,.78) 100%)}
+.storm-stage{position:relative;z-index:1;margin-top:-100dvh}
+.storm-plate{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:14vh 8vw 10vh;text-shadow:0 2px 28px rgba(0,0,0,.55)}
+.storm-plate .chapter{letter-spacing:.22em;text-transform:uppercase;font-size:11px;color:#e4c48a;margin:0 0 1.2rem}
+.storm-plate h2{font-family:"Fraunces",Georgia,serif;font-weight:400;font-style:italic;font-size:clamp(4.4rem,12vw,8.4rem);letter-spacing:-.04em;line-height:.9;margin:0;color:#f7f0e2}
+.storm-for{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:clamp(1.15rem,2.2vw,1.5rem);margin:1.2rem 0 0;color:#f0e6d2}
+.storm-play{margin-top:2.2rem;border:1px solid #f6f1e6;background:rgba(8,8,8,.4);color:#f6f1e6;letter-spacing:.16em;text-transform:uppercase;font-size:12px;padding:.7rem 1.2rem;cursor:pointer}
+.storm-play:hover{background:rgba(8,8,8,.62)}
+.storm-essay{width:min(40rem,88vw);margin:0 auto;padding:4vh 0 18vh;text-align:center;text-shadow:0 1px 18px rgba(0,0,0,.65)}
+.storm-essay p{font-family:"Fraunces",Georgia,serif;font-weight:400;font-size:clamp(1.08rem,1.35vw,1.26rem);line-height:1.75;margin:0 0 1.45rem}
+.storm-turn{font-style:italic;font-size:clamp(1.28rem,2vw,1.55rem);line-height:1.45;margin:2.2rem 0;color:#f3e6c8}
+.storm-credit{margin-top:2.2rem;font-size:.92rem;font-style:italic;color:rgba(246,241,230,.78)}
+.storm-to{font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:clamp(1.35rem,2.4vw,1.85rem);line-height:1.35;margin-top:2.4rem;color:#f7f0e2}
+.storm-film{width:min(920px,92vw);margin:1.6rem auto 0;aspect-ratio:16/9}
+.storm-film iframe{width:100%;height:100%;border:0}
+#notes.closing{position:relative;z-index:1;background:#0c0d0b}
 .field-notes{list-style:none;margin:2rem 0 2.5rem;padding:0;max-width:38rem;width:100%}
 .field-notes li{margin:0 0 2rem;padding:0 0 2rem;border-bottom:1px solid rgba(243,241,232,.12)}
 .field-notes li:last-child{border-bottom:0;margin-bottom:0;padding-bottom:0}
@@ -45,7 +49,7 @@ body{font-family:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
 .field-notes p{margin:0;font-size:1rem;line-height:1.7;color:rgba(243,241,232,.86);max-width:34rem}
 @media(max-width:700px){
   .storm-plate{padding:18vh 7vw 10vh}
-  #notes .storm-plate h2{font-size:clamp(3.4rem,22vw,5.2rem)}
+  .storm-plate h2{font-size:clamp(3.4rem,18vw,5.2rem)}
   .storm-essay{text-align:left;padding:6vh 0 16vh}
   .storm-essay p{font-size:1.05rem;line-height:1.68}
   .storm-turn{text-align:center}
@@ -92,10 +96,3 @@ body{font-family:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
 #hang-film header{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px}
 #hang-film-player{width:min(100%,1100px);max-height:78dvh;background:#000}
 @media(max-width:700px){.hang-studio{grid-template-columns:1fr}}
-
-.storm-play{position:relative;display:block;width:min(920px,92vw);margin:2.4rem auto 0;border:0;padding:0;background:0;cursor:pointer}
-.storm-play img{width:100%;height:auto;display:block;aspect-ratio:16/9;object-fit:cover;filter:saturate(.9) contrast(1.05)}
-.storm-play span{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);padding:.55rem 1.1rem;border:1px solid #f6f1e6;color:#f6f1e6;letter-spacing:.14em;text-transform:uppercase;font-size:12px;background:rgba(8,8,8,.45)}
-.storm-to{margin:1.1rem 0 0;font-family:"Fraunces",Georgia,serif;font-style:italic;font-size:clamp(1rem,1.6vw,1.2rem);color:#f0e6d2}
-.storm-film{width:min(920px,92vw);margin:2.4rem auto 0;aspect-ratio:16/9}
-.storm-film iframe{width:100%;height:100%;border:0}
