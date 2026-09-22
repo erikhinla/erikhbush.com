@@ -1,0 +1,75 @@
+/* Benefit track. Additive. One slot. Strings live in benefit-track.json. */
+:root{
+  --track-ink: #F4F1EA;
+  --track-release: #2F9E6B;
+  --track-scrim: 0 1px 24px rgba(13,15,18,.65);
+  --track-safe-frame: 6vh;
+  --track-lockup-clearance: 5.5rem;
+  --track-fade-in: 400ms;
+  --track-fade-out: 300ms;
+  --track-ease: cubic-bezier(.22,.61,.36,1);
+}
+.benefit-track{
+  position:fixed;
+  left:0;right:0;
+  bottom:calc(var(--track-safe-frame) + var(--track-lockup-clearance));
+  z-index:40;
+  display:flex;
+  justify-content:center;
+  padding:0 6vw;
+  pointer-events:none;
+}
+.benefit-track__line{
+  margin:0;
+  max-width:36ch;
+  text-align:center;
+  text-wrap:balance;
+  font-family:var(--sc-font-display),"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  font-weight:600;
+  font-size:clamp(1.2rem,2.2vw,1.75rem);
+  line-height:1.25;
+  letter-spacing:-.02em;
+  color:var(--track-ink);
+  text-shadow:0 2px 28px #000,0 0 18px #000a;
+  opacity:0;
+  transform:translateY(.375rem);
+  transition:opacity var(--track-fade-out) var(--track-ease),transform var(--track-fade-out) var(--track-ease),color var(--track-fade-out) var(--track-ease);
+}
+.benefit-track__line.is-visible{
+  opacity:.92;
+  transform:translateY(0);
+  transition-duration:var(--track-fade-in);
+}
+.benefit-track__line.is-release{color:var(--track-release)}
+.track-lockup__line{
+  display:block;
+  margin:.35em 0 0;
+  font-family:var(--sc-font-display),"Instrument Sans","Helvetica Neue",Arial,sans-serif;
+  font-weight:500;
+  font-size:clamp(.95rem,1.2vw,1.2rem);
+  line-height:1.35;
+  letter-spacing:.01em;
+  color:var(--track-ink);
+  opacity:.78;
+  max-width:none;
+  white-space:nowrap;
+  text-transform:none;
+}
+.track-caption{
+  position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+  clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;
+}
+body.is-sheet .benefit-track,
+html.is-sheet .benefit-track{display:none}
+@media(prefers-reduced-motion:reduce){
+  .benefit-track__line{transform:none;transition-duration:1ms}
+  .benefit-track__line.is-visible{transition-duration:1ms}
+}
+@media(max-width:800px){
+  :root{--track-lockup-clearance:4.25rem}
+  .benefit-track{padding:0 1.25rem;padding-right:96px}
+  .benefit-track__line{max-width:32ch}
+}
+@media(max-height:32rem){
+  :root{--track-safe-frame:3vh;--track-lockup-clearance:2rem}
+}

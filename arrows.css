@@ -1,0 +1,115 @@
+/* Hairline arrows. Unicode ↗ ↙ ↓ ← → become iOS emoji on phones. */
+:root{
+  --arr-ne:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M6 18L18 6'/%3E%3Cpath d='M9 6H18V15'/%3E%3C/svg%3E");
+  --arr-sw:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M18 6L6 18'/%3E%3Cpath d='M15 18H6V9'/%3E%3C/svg%3E");
+  --arr-down:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M12 5v14'/%3E%3Cpath d='M6 13l6 6 6-6'/%3E%3C/svg%3E");
+  --arr-left:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M19 12H5'/%3E%3Cpath d='M11 6l-6 6 6 6'/%3E%3C/svg%3E");
+  --arr-right:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23000' stroke-width='2' stroke-linecap='square' stroke-linejoin='miter'%3E%3Cpath d='M5 12h14'/%3E%3Cpath d='M13 6l6 6-6 6'/%3E%3C/svg%3E");
+}
+
+.arr{
+  display:inline-block;
+  width:.82em;
+  height:.82em;
+  flex-shrink:0;
+  background-color:currentColor;
+  -webkit-mask:var(--arr-right) center/contain no-repeat;
+  mask:var(--arr-right) center/contain no-repeat;
+  pointer-events:none;
+  vertical-align:.08em;
+}
+.arr-ne{-webkit-mask-image:var(--arr-ne);mask-image:var(--arr-ne)}
+.arr-sw{-webkit-mask-image:var(--arr-sw);mask-image:var(--arr-sw)}
+.arr-down{-webkit-mask-image:var(--arr-down);mask-image:var(--arr-down)}
+.arr-left{-webkit-mask-image:var(--arr-left);mask-image:var(--arr-left)}
+.arr-right{-webkit-mask-image:var(--arr-right);mask-image:var(--arr-right)}
+
+/* CTA discs keep their fill. Draw the glyph on ::before so the mask does not punch the circle. */
+.action>.arr,
+.enter>.arr{
+  display:grid;
+  place-items:center;
+  width:48px;
+  height:48px;
+  margin:0;
+  vertical-align:unset;
+  background-image:none;
+  -webkit-mask:none;
+  mask:none;
+  border-radius:50%;
+  color:#101111;
+}
+.action>.arr::before,
+.enter>.arr::before{
+  content:"";
+  width:17px;
+  height:17px;
+  background-color:currentColor;
+  -webkit-mask:var(--arr-right) center/contain no-repeat;
+  mask:var(--arr-right) center/contain no-repeat;
+}
+
+.brand .arr,
+.brand-home .arr{
+  width:13px;
+  height:13px;
+  margin-left:.2em;
+  vertical-align:.12em;
+  color:inherit;
+  background-color:currentColor;
+}
+.gate-choices .arr{
+  width:.42em;
+  height:.42em;
+  margin:0;
+  align-self:center;
+}
+.method-nav .arr,
+.method-launch .arr,
+.text-action .arr,
+.forward-link .arr,
+.payment-links .arr{
+  width:.72em;
+  height:.72em;
+  margin-left:.28em;
+}
+.film-buttons .arr,
+.reader-controls .arr{
+  width:18px;
+  height:18px;
+  margin:0;
+  vertical-align:middle;
+}
+
+.brand-now:not(:empty):after{
+  content:"";
+  display:inline-block;
+  width:.62em;
+  height:.62em;
+  margin-left:6px;
+  background-color:var(--cta,var(--sc-accent));
+  -webkit-mask:var(--arr-right) center/contain no-repeat;
+  mask:var(--arr-right) center/contain no-repeat;
+  vertical-align:.1em;
+}
+
+@media(max-width:800px){
+  .action>.arr{
+    width:40px;
+    height:40px;
+  }
+  .enter>.arr{
+    width:44px;
+    height:44px;
+  }
+  .action>.arr::before,
+  .enter>.arr::before{
+    width:14px;
+    height:14px;
+  }
+  .brand .arr,
+  .brand-home .arr{
+    width:12px;
+    height:12px;
+  }
+}
