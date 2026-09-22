@@ -451,36 +451,36 @@ if(walkForm) walkForm.addEventListener('submit',e=>{
 function startDDD(){closeAll();if(window.DDD?.hasDraft()){window.DDD.open();}else open('ddd-intro');}
 if($('#open-ddd'))$('#open-ddd').onclick=startDDD;if($('#ddd-method-start'))$('#ddd-method-start').onclick=startDDD;if($('#begin-ddd'))$('#begin-ddd').onclick=()=>{close('ddd-intro');window.DDD.open();};
 const studioLead=[
- {when:'Process',claim:'What two AI agents disagreeing looks like',title:'Conflicting outputs',cover:'assets/b2b-task-3.jpg',href:'/hang/conflict'},
- {when:'Process',claim:'Picking a logo without a design team',title:'Choosing a logo',cover:'assets/b2b-task-4.jpg',href:'/hang/logo'},
- {when:'Process',claim:'Where the context actually drops',title:'The handoff',cover:'assets/proof-mood-3.jpg',href:'/hang/handoff'},
- {when:'Process',claim:'Auditing code nobody on staff wrote',title:'Checking the code',cover:'assets/b2b-task-1.jpg',href:'/hang/code'}
+ {when:'Process',claim:'What two AI agents disagreeing looks like',title:'Conflicting outputs',cover:'assets/b2b-task-3.jpg',href:'/story#hang-conflict'},
+ {when:'Process',claim:'Picking a logo without a design team',title:'Choosing a logo',cover:'assets/b2b-task-4.jpg',href:'/story#hang-logo'},
+ {when:'Process',claim:'Where the context actually drops',title:'The handoff',cover:'assets/proof-mood-3.jpg',href:'/story#hang-handoff'},
+ {when:'Process',claim:'Auditing code nobody on staff wrote',title:'Checking the code',cover:'assets/b2b-task-1.jpg',href:'/story#hang-code'}
 ];
 const studioMore=[
- {when:'Campaign',claim:'AI created a job. Nobody wanted it.',title:'The origin lockup',cover:'assets/ai-created-a-job.jpg',href:'/hang/created'},
- {when:'Process',claim:'The leftover job, looping',title:'Desk fog',cover:'assets/desk-fog-loop.jpg',href:'/hang/desk'},
- {when:'PROOF',claim:'From fog to architecture',title:'Fog and friction, then a spine',cover:'assets/proof-to-architecture.jpg',href:'/hang/spine'},
- {when:'PROOF',claim:'The repair nobody named',title:'Hidden human repair',cover:'assets/hidden-repair-load.jpg',href:'/hang/repair'},
- {when:'BizBuilders',claim:'Where the fix lives',title:'BBAI momentum',cover:'assets/bbai-momentum-loop.jpg',href:'/hang/bbai'},
- {when:'Campaign',claim:'A kit that lifts the fog',title:'Fog Lift Kit',cover:'assets/fog-lift-kit.jpg',href:'/hang/kit'},
- {when:'Process',claim:'What happens when the glue snaps',title:'Computer explodes',cover:'assets/computer-explodes.jpg',href:'/hang/explodes'},
- {when:'Satire',claim:'The fog, with the joke left in',title:'Digital Fog satire',cover:'assets/satire-digital-fog.jpg',href:'/hang/satire'}
+ {when:'Campaign',claim:'AI created a job. Nobody wanted it.',title:'The origin lockup',cover:'assets/ai-created-a-job.jpg',href:'/story#hang-created'},
+ {when:'Process',claim:'The leftover job, looping',title:'Desk fog',cover:'assets/desk-fog-loop.jpg',href:'/story#hang-desk'},
+ {when:'PROOF',claim:'From fog to architecture',title:'Fog and friction, then a spine',cover:'assets/proof-to-architecture.jpg',href:'/story#hang-spine'},
+ {when:'PROOF',claim:'The repair nobody named',title:'Hidden human repair',cover:'assets/hidden-repair-load.jpg',href:'/story#hang-repair'},
+ {when:'BizBuilders',claim:'Where the fix lives',title:'BBAI momentum',cover:'assets/bbai-momentum-loop.jpg',href:'/story#hang-bbai'},
+ {when:'Campaign',claim:'A kit that lifts the fog',title:'Fog Lift Kit',cover:'assets/fog-lift-kit.jpg',href:'/story#hang-kit'},
+ {when:'Process',claim:'What happens when the glue snaps',title:'Computer explodes',cover:'assets/computer-explodes.jpg',href:'/story#hang-explodes'},
+ {when:'Satire',claim:'The fog, with the joke left in',title:'Digital Fog satire',cover:'assets/satire-digital-fog.jpg',href:'/story#hang-satire'}
 ];
 const hangRooms=[
  {q:'The rooms · newest first',works:[
-  {when:'Sept 2026',claim:'AI Created a Job. (Nobody wanted.)',title:'Architecting Momentum',cover:'assets/studio/14/cover.jpg',href:'/hang/architecting'},
-  {when:'Sept 2026',claim:'Where work gets a spine',title:'Architecting AI Momentum',cover:'assets/studio/0/cover.jpg',href:'/hang/momentum'},
-  {when:'Sept 2026',claim:'Vercel executes. FLOW dictates the rules.',title:'The Enterprise Agentic OS',cover:'assets/studio/12/cover.jpg',href:'/hang/agentic'},
-  {when:'Sept 2026',claim:'What people carry',title:'Governing AI Shadow Work',cover:'assets/studio/3/cover.jpg',href:'/hang/shadow'},
-  {when:'July 2026',claim:'The path to done',title:'Governed Execution',cover:'assets/studio/2/cover.jpg',href:'/hang/governed'},
-  {when:'July 2026',claim:'From fog to governed execution',title:'The Architecture of AI-Native Operations',cover:'assets/studio/4/cover.jpg',href:'/hang/architecture'},
-  {when:'2026',claim:'The spine under the work',title:'The Operating Backbone',cover:'assets/studio/11/cover.jpg',href:'/hang/backbone'},
-  {when:'2026',claim:'The path the work takes',title:'Engineering Operational Flow',cover:'assets/studio/10/cover.jpg',href:'/hang/flow'},
-  {when:'2026',claim:'How the work keeps moving',title:'The operator archive',cover:'assets/studio/1/cover.jpg',href:'/hang/operator'},
-  {when:'2026',claim:'Most systems generate. Few govern what happens next.',title:'AI Operational Architecture',cover:'assets/studio/7/cover.jpg',href:'/hang/ops'},
-  {when:'2026',claim:'Your tools didn’t remove the work.',title:'Architecting Digital Order',cover:'assets/studio/8/cover.jpg',href:'/hang/order'},
-  {when:'2026',claim:'PROOF, in three pages',title:'Proof Overview',cover:'assets/studio/6/cover.jpg',href:'/hang/overview'},
-  {when:'2026',claim:'Most AI programs fail in the handoff.',title:'The Forensic Instrument',cover:'assets/studio/9/cover.jpg',href:'/hang/forensic'}
+  {when:'Sept 2026',claim:'AI Created a Job. (Nobody wanted.)',title:'Architecting Momentum',cover:'assets/studio/14/cover.jpg',href:'/story#hang-architecting'},
+  {when:'Sept 2026',claim:'Where work gets a spine',title:'Architecting AI Momentum',cover:'assets/studio/0/cover.jpg',href:'/story#hang-momentum'},
+  {when:'Sept 2026',claim:'Vercel executes. FLOW dictates the rules.',title:'The Enterprise Agentic OS',cover:'assets/studio/12/cover.jpg',href:'/story#hang-agentic'},
+  {when:'Sept 2026',claim:'What people carry',title:'Governing AI Shadow Work',cover:'assets/studio/3/cover.jpg',href:'/story#hang-shadow'},
+  {when:'July 2026',claim:'The path to done',title:'Governed Execution',cover:'assets/studio/2/cover.jpg',href:'/story#hang-governed'},
+  {when:'July 2026',claim:'From fog to governed execution',title:'The Architecture of AI-Native Operations',cover:'assets/studio/4/cover.jpg',href:'/story#hang-architecture'},
+  {when:'2026',claim:'The spine under the work',title:'The Operating Backbone',cover:'assets/studio/11/cover.jpg',href:'/story#hang-backbone'},
+  {when:'2026',claim:'The path the work takes',title:'Engineering Operational Flow',cover:'assets/studio/10/cover.jpg',href:'/story#hang-flow'},
+  {when:'2026',claim:'How the work keeps moving',title:'The operator archive',cover:'assets/studio/1/cover.jpg',href:'/story#hang-operator'},
+  {when:'2026',claim:'Most systems generate. Few govern what happens next.',title:'AI Operational Architecture',cover:'assets/studio/7/cover.jpg',href:'/story#hang-ops'},
+  {when:'2026',claim:'Your tools didn’t remove the work.',title:'Architecting Digital Order',cover:'assets/studio/8/cover.jpg',href:'/story#hang-order'},
+  {when:'2026',claim:'PROOF, in three pages',title:'Proof Overview',cover:'assets/studio/6/cover.jpg',href:'/story#hang-overview'},
+  {when:'2026',claim:'Most AI programs fail in the handoff.',title:'The Forensic Instrument',cover:'assets/studio/9/cover.jpg',href:'/story#hang-forensic'}
  ]}
 ];
 function hangCard(n){return `<a class="nudes-work is-flip" href="${n.href}"><span class="frame"><img src="${n.cover}" alt="${n.claim}" loading="lazy" decoding="async" width="600" height="336"></span><span class="when">${n.when}</span><b>${n.claim}</b><small>${n.title}</small></a>`;}
