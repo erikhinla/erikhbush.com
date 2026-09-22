@@ -14,9 +14,10 @@ function mountInfra(){
  const onBiz=document.body.dataset.page==='business';
  const onLife=document.body.dataset.page==='life';
  const home=onLife?'#arrival':(onBiz?'/':'#arrival');
- const life=onLife?'#daily':'https://erikhbush.com';
+ const life=onLife?'#routes':'https://erikhbush.com';
+ const daily=onLife?'#daily':'https://erikhbush.com';
  const proof=onLife?'https://transformby10x.ai/bbai':'#proof';
- const me=onLife?'#founder':'https://erikhbush.com';
+ const me=onLife?'/story':'https://erikhbush.com/story';
  const mark=document.createElement('a');
  mark.className='mark';
  mark.href=home;
@@ -24,7 +25,9 @@ function mountInfra(){
  mark.setAttribute('aria-label','Back');
  const box=document.createElement('details');
  box.className='infra';
- box.innerHTML=`<summary class="infra-trace" aria-label="INFRA"><span></span></summary><nav aria-label="INFRA"><p class="infra-word">INFRA</p><a class="infra-lane" data-lane="life" href="${life}">Life</a><a class="infra-child" data-lane="life" href="${life}">De-Fog</a><a class="infra-lane" data-lane="biz" href="${onLife?'https://transformby10x.ai/bbai':'/bbai'}">Business</a><a class="infra-child" data-lane="biz" href="${proof}">PROOF</a><a class="infra-me" href="${me}">Me</a><a class="infra-child infra-hang" href="#gallery" data-open="gallery">The hang</a></nav>`;
+ const hangHref=onLife?'/story#wall':'#gallery';
+ const hangOpen=onLife?'':'data-open="gallery"';
+ box.innerHTML=`<summary class="infra-trace" aria-label="INFRA"><span></span></summary><nav aria-label="INFRA"><p class="infra-word">INFRA</p><a class="infra-lane" data-lane="life" href="${life}">Life</a><a class="infra-child" data-lane="life" href="${daily}">De-Fog</a><a class="infra-lane" data-lane="biz" href="${onLife?'https://transformby10x.ai/bbai':'/bbai'}">Business</a><a class="infra-child" data-lane="biz" href="${proof}">PROOF</a><a class="infra-me" href="${me}">How we got here</a><a class="infra-child" href="${me}#notes">Field notes</a><a class="infra-child infra-hang" href="${hangHref}" ${hangOpen}>The hang</a></nav>`;
  document.body.append(mark,box);
  box.querySelectorAll('nav a').forEach(el=>el.addEventListener('click',()=>box.removeAttribute('open')));
  markInfra();
@@ -464,9 +467,21 @@ const studioMore=[
  {when:'Satire',claim:'The fog, with the joke left in',title:'Digital Fog satire',cover:'assets/satire-digital-fog.jpg',href:'/hang/satire'}
 ];
 const hangRooms=[
- {q:'Why is everything harder than it should be?',works:[{when:'Sept 2026',claim:'What people carry',title:'Governing AI Shadow Work',cover:'assets/studio/3/cover.jpg',href:'/hang/shadow'},{when:'PROOF',claim:'Most AI programs fail in the handoff.',title:'The Forensic Instrument',cover:'assets/studio/9/cover.jpg',href:'/hang/forensic'}]},
- {q:'What is actually missing?',works:[{when:'Sept 2026',claim:'AI Created a Job. (Nobody wanted.)',title:'Architecting Momentum',cover:'assets/studio/14/cover.jpg',href:'/hang/architecting'},{when:'Sept 2026',claim:'Where work gets a spine',title:'Architecting AI Momentum',cover:'assets/studio/0/cover.jpg',href:'/hang/momentum'},{when:'Canon v2026.07',claim:'From fog to governed execution',title:'The Architecture of AI-Native Operations',cover:'assets/studio/4/cover.jpg',href:'/hang/architecture'},{when:'Overview',claim:'PROOF, in three pages',title:'Proof Overview',cover:'assets/studio/6/cover.jpg',href:'/hang/overview'},{when:'Thesis',claim:'Your tools didn’t remove the work.',title:'Architecting Digital Order',cover:'assets/studio/8/cover.jpg',href:'/hang/order'},{when:'Architecture',claim:'Most systems generate. Few govern what happens next.',title:'AI Operational Architecture',cover:'assets/studio/7/cover.jpg',href:'/hang/ops'}]},
- {q:'How does the work actually get done?',works:[{when:'July 2026',claim:'The path to done',title:'Governed Execution',cover:'assets/studio/2/cover.jpg',href:'/hang/governed'},{when:'Process',claim:'How the work keeps moving',title:'The operator archive',cover:'assets/studio/1/cover.jpg',href:'/hang/operator'},{when:'Engineering',claim:'The path the work takes',title:'Engineering Operational Flow',cover:'assets/studio/10/cover.jpg',href:'/hang/flow'},{when:'Backbone',claim:'The spine under the work',title:'The Operating Backbone',cover:'assets/studio/11/cover.jpg',href:'/hang/backbone'},{when:'Sept 2026',claim:'Vercel executes. FLOW dictates the rules.',title:'The Enterprise Agentic OS',cover:'assets/studio/12/cover.jpg',href:'/hang/agentic'},{when:'Specimen',claim:'One task. One spine. Then growth can land.',title:'The engagement',cover:'assets/studio/13/cover.jpg',href:'/specimen'}]}
+ {q:'The rooms · newest first',works:[
+  {when:'Sept 2026',claim:'AI Created a Job. (Nobody wanted.)',title:'Architecting Momentum',cover:'assets/studio/14/cover.jpg',href:'/hang/architecting'},
+  {when:'Sept 2026',claim:'Where work gets a spine',title:'Architecting AI Momentum',cover:'assets/studio/0/cover.jpg',href:'/hang/momentum'},
+  {when:'Sept 2026',claim:'Vercel executes. FLOW dictates the rules.',title:'The Enterprise Agentic OS',cover:'assets/studio/12/cover.jpg',href:'/hang/agentic'},
+  {when:'Sept 2026',claim:'What people carry',title:'Governing AI Shadow Work',cover:'assets/studio/3/cover.jpg',href:'/hang/shadow'},
+  {when:'July 2026',claim:'The path to done',title:'Governed Execution',cover:'assets/studio/2/cover.jpg',href:'/hang/governed'},
+  {when:'July 2026',claim:'From fog to governed execution',title:'The Architecture of AI-Native Operations',cover:'assets/studio/4/cover.jpg',href:'/hang/architecture'},
+  {when:'2026',claim:'The spine under the work',title:'The Operating Backbone',cover:'assets/studio/11/cover.jpg',href:'/hang/backbone'},
+  {when:'2026',claim:'The path the work takes',title:'Engineering Operational Flow',cover:'assets/studio/10/cover.jpg',href:'/hang/flow'},
+  {when:'2026',claim:'How the work keeps moving',title:'The operator archive',cover:'assets/studio/1/cover.jpg',href:'/hang/operator'},
+  {when:'2026',claim:'Most systems generate. Few govern what happens next.',title:'AI Operational Architecture',cover:'assets/studio/7/cover.jpg',href:'/hang/ops'},
+  {when:'2026',claim:'Your tools didn’t remove the work.',title:'Architecting Digital Order',cover:'assets/studio/8/cover.jpg',href:'/hang/order'},
+  {when:'2026',claim:'PROOF, in three pages',title:'Proof Overview',cover:'assets/studio/6/cover.jpg',href:'/hang/overview'},
+  {when:'2026',claim:'Most AI programs fail in the handoff.',title:'The Forensic Instrument',cover:'assets/studio/9/cover.jpg',href:'/hang/forensic'}
+ ]}
 ];
 function hangCard(n){return `<a class="nudes-work is-flip" href="${n.href}"><span class="frame"><img src="${n.cover}" alt="${n.claim}" loading="lazy" decoding="async" width="600" height="336"></span><span class="when">${n.when}</span><b>${n.claim}</b><small>${n.title}</small></a>`;}
 let hangBuilt=false;
