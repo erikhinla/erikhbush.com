@@ -1137,3 +1137,7 @@ body[data-page="business"] .manifesto-cry .govern{
   line-height:1.25;
 }
 #questionnaire .answer-options{max-width:38rem}
+
+body[data-page="life"] #routes .bill.scan-bleed{justify-content:flex-end;padding-bottom:8vh}
+body[data-page="life"] #routes .daily-copy h2{max-width:8ch}
+body[data-page="life"] #routes .house-turn{margin-top:32px}

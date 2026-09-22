@@ -75,7 +75,7 @@
       "name": "Scan",
       "mode": "silent",
       "line": null,
-      "cue": "8 answers. One stall spot.",
+      "cue": "8 answers. One place it sits.",
       "register": "relief",
       "release": false,
       "publishAllowed": true,

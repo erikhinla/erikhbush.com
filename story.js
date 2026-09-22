@@ -26,7 +26,8 @@ const decks=[
  {title:'The Forensic Instrument',count:12,file:'The_Forensic_Instrument.pdf',note:'PROOF concept deck. Illustrations are not a live diagnostic or measured client result.',notes:{}},
  {title:'Engineering Operational Flow',count:15,file:'Engineering_Operational_Flow.pdf',note:'Working architecture deck. Source-deck descriptions, not a connected client runtime.',notes:{}},
  {title:'The Operating Backbone',count:14,file:'The_Operating_Backbone.pdf',note:'Working architecture deck. Source-deck descriptions, not a live operating system.',notes:{}},
- {title:'The Enterprise Agentic OS',count:13,file:'The_Enterprise_Agentic_OS.pdf',note:'Working architecture deck. FLOW Agent AS with Vercel agentic infrastructure. Source-deck descriptions, not a connected client runtime.',notes:{}}
+ {title:'The Enterprise Agentic OS',count:13,file:'The_Enterprise_Agentic_OS.pdf',note:'Working architecture deck. FLOW Agent AS with Vercel agentic infrastructure. Source-deck descriptions, not a connected client runtime.',notes:{}},
+ {title:'Architecting Momentum',count:14,folder:14,file:'Architecting_Momentum.pdf',note:'Campaign deck. AI created a job nobody wanted. Source-deck descriptions, not a live offer or measured client result.',notes:{}}
 ];
 let deck=0,page=0;
 function background(){if(document.hidden||$$('dialog[open]').length||reduced)portrait.pause();else portrait.play().catch(()=>{});}
@@ -86,8 +87,8 @@ $('#film-track').innerHTML=scenes.map((s,i)=>`<button data-chapter="${i}" aria-l
 $$('[data-chapter]').forEach(b=>b.onclick=()=>seek(+b.dataset.chapter));$('#film-prev').onclick=()=>seek(chapter-1);$('#film-next').onclick=()=>seek(chapter+1);$('#film-play').onclick=()=>{if(chapter===scenes.length-1&&!playing){chapter=0;renderScene();}setPlaying(!playing);};$('#sound').onclick=()=>setSound(!soundOn);
 $('#transcript').insertAdjacentHTML('beforeend',scenes.map(s=>`<p><strong>${s.line}</strong> ${s.sub}</p>`).join(''));
 $('#read-mode').onclick=()=>{readMode=!readMode;setPlaying(false);$('#projection').hidden=readMode;$('#transcript').hidden=!readMode;$('#film-track').hidden=readMode;$('#film-play').disabled=readMode;$('#film-prev').hidden=readMode;$('#film-next').hidden=readMode;$('#read-mode').textContent=readMode?'Back to film':'Read instead';$('#read-mode').setAttribute('aria-pressed',String(readMode));};
-function renderPage(){const d=decks[deck];const im=$('#deck-page');$('#page-error').hidden=true;im.src=`assets/studio/${deck}/page-${String(page+1).padStart(2,'0')}.jpg`;im.alt=`${d.title}, page ${page+1} of ${d.count}`;$('#page-select').value=String(page);$('#deck-prev').disabled=page===0;$('#deck-next').disabled=page===d.count-1;$('#deck-note').textContent=d.notes[page]||d.note;$('#reader-stage').scrollTo(0,0);}
-$$('[data-deck]').forEach(b=>b.onclick=()=>{deck=+b.dataset.deck;page=0;const d=decks[deck];$('#reader-title').textContent=d.title;$('#page-select').innerHTML=Array.from({length:d.count},(_,i)=>`<option value="${i}">${i+1}</option>`).join('');$('#page-total').textContent='/ '+d.count;$('#deck-download').href='assets/studio/'+d.file;$('#reader-stage').classList.remove('zoomed');$('#zoom').setAttribute('aria-pressed','false');$('#zoom').textContent='Zoom in';renderPage();show('reader',b);});
+function renderPage(){const d=decks[deck];const im=$('#deck-page');$('#page-error').hidden=true;im.src=`assets/studio/${d.folder!=null?d.folder:deck}/page-${String(page+1).padStart(2,'0')}.jpg`;im.alt=`${d.title}, page ${page+1} of ${d.count}`;$('#page-select').value=String(page);$('#deck-prev').disabled=page===0;$('#deck-next').disabled=page===d.count-1;$('#deck-note').textContent=d.notes[page]||d.note;$('#reader-stage').scrollTo(0,0);}
+$$('[data-deck]').forEach(b=>b.onclick=()=>{deck=+b.dataset.deck;page=0;const d=decks[deck];$('#reader-title').textContent=d.title;$('#page-select').innerHTML=Array.from({length:d.count},(_,i)=>`<option value="${i}">${i+1}</option>`).join('');$('#page-total').textContent='/ '+d.count;$('#deck-download').href='assets/studio/'+(d.folder!=null?d.folder+'/':'')+d.file;$('#reader-stage').classList.remove('zoomed');$('#zoom').setAttribute('aria-pressed','false');$('#zoom').textContent='Zoom in';renderPage();show('reader',b);});
 $$('[data-film]').forEach(b=>b.onclick=()=>{const v=$('#hang-film-player');if(!v)return;$('#hang-film-title').textContent=b.querySelector('b')?.textContent||'The studio';v.pause();v.src=media(b.dataset.film);show('hang-film',b);v.play().catch(()=>{});});
 const PIECES={fog:'hang-fog',shadow:'hang-shadow',momentum:'hang-momentum',architecture:'hang-architecture',governed:'hang-governed',operator:'hang-operator',conflict:'hang-conflict',logo:'hang-logo',handoff:'hang-handoff',code:'hang-code',created:'hang-created',desk:'hang-desk',spine:'hang-spine',repair:'hang-repair',bbai:'hang-bbai',kit:'hang-kit',explodes:'hang-explodes',satire:'hang-satire',overview:'hang-overview',forensic:'hang-forensic',order:'hang-order',ops:'hang-ops',flow:'hang-flow',backbone:'hang-backbone',agentic:'hang-agentic'};
 function openHangPiece(){
@@ -110,3 +111,19 @@ background();
 // Expose only compact playback state for local verification; no personal session data.
 window.STUDIO={state:()=>({chapter,playing,soundOn,deck,page,reduced})};
 })();
+
+document.addEventListener('click',e=>{
+ const door=e.target.closest('[data-yt]');
+ if(!door||door.dataset.ready)return;
+ door.dataset.ready='1';
+ const crop=document.createElement('div');
+ crop.className='storm-film';
+ const frame=document.createElement('iframe');
+ frame.title='The Storm';
+ frame.allow='autoplay; encrypted-media; picture-in-picture';
+ frame.referrerPolicy='strict-origin-when-cross-origin';
+ frame.src='https://www.youtube-nocookie.com/embed/'+door.dataset.yt+'?autoplay=1&modestbranding=1&rel=0&playsinline=1';
+ crop.appendChild(frame);
+ door.replaceWith(crop);
+});
+
