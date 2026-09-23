@@ -1142,3 +1142,9 @@ body[data-page="life"] #routes .bill.scan-bleed{justify-content:flex-end;padding
 body[data-page="life"] #routes .daily-copy{max-width:min(800px,92vw)}
 body[data-page="life"] #routes .daily-copy h2{max-width:8ch}
 body[data-page="life"] #routes .house-turn{margin-top:32px}
+
+/* Release gate. The closer is two lines, not a word stack. */
+.manifesto-cry .peak.close{max-width:none;text-wrap:pretty}
+.manifesto-cry .peak.fog-stamp{max-width:16em;text-wrap:pretty}
+#gate .gate-release{margin:0;max-width:11em;font-size:clamp(2rem,4.4vw,3.4rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:#f4eee5}
+#gate .gate-board .gate-up{text-transform:none;font-weight:700;letter-spacing:-.02em;font-size:clamp(1.2rem,2vw,1.65rem)}
