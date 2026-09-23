@@ -99,3 +99,10 @@ body{font-family:"Instrument Sans","Helvetica Neue",Arial,sans-serif}
 
 .storm-veil{background:rgba(6,8,10,.82)}
 .storm-essay{background:linear-gradient(180deg,rgba(6,8,10,.15),rgba(6,8,10,.78) 10%,rgba(6,8,10,.86));padding:2.2rem 1.4rem 10rem}
+
+.storm-world img{object-position:center 38%}
+.storm-veil{background:linear-gradient(180deg,rgba(6,8,10,.28) 0%,rgba(6,8,10,.08) 36%,rgba(6,8,10,.55) 70%,rgba(6,8,10,.9) 100%)}
+.storm-plate{justify-content:flex-start;align-items:flex-start;text-align:left;padding:18vh 8vw 10vh}
+.storm-plate h2{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0}
+.storm-essay{background:linear-gradient(180deg,rgba(6,8,10,.55),rgba(6,8,10,.92) 14%,rgba(8,9,10,.94));padding:3rem 1.5rem 10rem}
+.storm-film{width:min(1100px,100%);margin:0;aspect-ratio:16/9}
