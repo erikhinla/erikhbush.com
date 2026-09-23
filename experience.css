@@ -1148,3 +1148,10 @@ body[data-page="life"] #routes .house-turn{margin-top:32px}
 .manifesto-cry .peak.fog-stamp{max-width:16em;text-wrap:pretty}
 #gate .gate-release{margin:0;max-width:11em;font-size:clamp(2rem,4.4vw,3.4rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;color:#f4eee5}
 #gate .gate-board .gate-up{text-transform:none;font-weight:700;letter-spacing:-.02em;font-size:clamp(1.2rem,2vw,1.65rem)}
+
+/* Gate headline is two lines. The 9.8ch bill rule must not stack it. */
+#gate .bill h2.gate-release{max-width:none;width:auto;font-size:clamp(1.85rem,4vw,3.1rem);line-height:1.02;letter-spacing:-.03em;text-wrap:wrap;font-weight:800;color:#f4eee5}
+#gate .bill h2.gate-release span{display:block;white-space:nowrap}
+.manifesto-cry .peak.close{max-width:none;text-wrap:wrap}
+.manifesto-cry .peak.close span{display:block;white-space:nowrap}
+#gate .gate-board .gate-up{white-space:nowrap}
