@@ -1155,3 +1155,5 @@ body[data-page="life"] #routes .house-turn{margin-top:32px}
 .manifesto-cry .peak.close{max-width:none;text-wrap:wrap}
 .manifesto-cry .peak.close span{display:block;white-space:nowrap}
 #gate .gate-board .gate-up{white-space:nowrap}
+
+.manifesto-cry p.closer{margin:2.75rem 0 0;max-width:34rem;font-size:clamp(1.2rem,2.1vw,1.55rem);font-weight:700;line-height:1.3;letter-spacing:0;text-wrap:pretty;color:#f4eee5}
