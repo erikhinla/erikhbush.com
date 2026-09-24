@@ -151,7 +151,7 @@ function changeWorld(name,light=.8,crop){
   videos.forEach(v=>{if(v!==holding)hide(v);});
   show(holding);
   holding.muted=true;
-  if(!reduced&&!document.hidden)holding.play().catch(()=>{});
+  ensurePlay(holding);
   syncBed(name);
   return;
  }
@@ -174,10 +174,10 @@ function changeWorld(name,light=.8,crop){
   syncBed(name);
   if(outgoing&&outgoing!==next) setTimeout(()=>{if(outgoing.dataset.file!==wanted){outgoing.pause();outgoing.removeAttribute('src');outgoing.removeAttribute('poster');delete outgoing.dataset.file;outgoing.load();}},900);
  };
- next.addEventListener('canplay',()=>{reveal();if(!reduced&&!document.hidden)next.play().catch(()=>{});},{once:true});
+ next.addEventListener('loadeddata',()=>{reveal();ensurePlay(next);},{once:true});
+ next.addEventListener('canplay',()=>{reveal();ensurePlay(next);},{once:true});
  next.addEventListener('error',reveal,{once:true});
- reveal();
- if(!reduced&&!document.hidden) next.play().catch(()=>{});
+ ensurePlay(next);
 }
 const acts=$$('[data-world]');let framePending=false;
 function syncChrome(best){
@@ -505,10 +505,9 @@ document.addEventListener('click',e=>{
 const galleryItems=[['The handoff','proof-mood-3.mp4','Where the context actually drops.'],['How PROOF finds the fog','proof-mood-2.mp4','The leftover job, on film.'],['PROOF / First cut','proof-mood-1.mp4','Before the method had a name.'],['Checking the code','b2b-task-1.mp4','Auditing code nobody on staff wrote.'],['Content strategy','b2b-task-2.mp4','Holding the story still.'],['Conflicting outputs','b2b-task-3.mp4','What two AI agents disagreeing looks like.'],['Choosing a logo','b2b-task-4.mp4','Picking a logo without a design team.'],['The final summary','b2b-task-5.mp4','What the work actually said.'],['Keeping strategy in view','b2b-task-6.mp4','The plan that has to stay in the room.'],['The Map','b2b-task-6-world.mp4','Where the work comes back.'],['Digital De-Fog Daily','defog-daily-hero.mp4','The fog leaves. Twenty minutes.'],['The concept artwork',null,'Some labels predate Finder.'],['The origin lockup','ai-created-a-job.mp4','AI created a job. Nobody wanted it.'],['Desk fog','desk-fog-loop.mp4','The leftover job, looping.'],['Fog to architecture','proof-to-architecture.mp4','From fog to architecture.'],['Hidden repair','hidden-repair-load.mp4','The repair nobody named.'],['BBAI momentum','bbai-momentum-loop.mp4','Where the fix lives.'],['Fog Lift Kit','fog-lift-kit.mp4','A kit that lifts the fog.'],['Computer explodes','computer-explodes.mp4','What happens when the glue snaps.'],['Digital Fog satire','satire-digital-fog.mp4','The fog, with the joke left in.']];
 $('#gallery-nav') && ($('#gallery-nav').innerHTML=galleryItems.map((a,i)=>`<button data-gallery="${i}">${a[0]}</button>`).join(''));function chooseGallery(i){const item=galleryItems[i],v=$('#gallery-film');if(!v)return;v.pause();$$('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.gallery)===i)));v.hidden=!item[1];const art=$('#gallery-art');if(art)art.hidden=!!item[1];if(item[1])v.src=media(item[1]);else v.removeAttribute('src');const cap=$('#gallery-caption');if(cap)cap.textContent=item[2];}
 $$('[data-gallery]').forEach(b=>b.onclick=()=>chooseGallery(Number(b.dataset.gallery)));$('#gallery-film').addEventListener('play',()=>videos.forEach(v=>v.pause()));$('#gallery-film').addEventListener('pause',()=>{if($('#gallery').open&&!document.hidden&&!reduced)liveWorld()?.play().catch(()=>{});});
-document.addEventListener('visibilitychange',()=>{if(document.hidden)$$('video').forEach(v=>v.pause());else if(!reduced){if($('#world').dataset.scene!=='off'&&!($('#gallery').open&&!$('#gallery-film').paused))liveWorld()?.play().catch(()=>{});$$('.fog-stack video,.route-lane video').forEach(v=>v.play().catch(()=>{}));syncBed(wanted||activeScene?.dataset.world);}});
-if(reduced)$$('.fog-stack video,.route-lane video').forEach(v=>{v.pause();v.removeAttribute('autoplay');});
+document.addEventListener('visibilitychange',()=>{if(document.hidden)$$('video').forEach(v=>v.pause());else if($('#world').dataset.scene!=='off'&&!($('#gallery').open&&!$('#gallery-film').paused)){ensurePlay(liveWorld());$$('.fog-stack video,.route-lane video').forEach(ensurePlay);syncBed(wanted||activeScene?.dataset.world);}});
 $$('.route-lane video[data-film]').forEach(v=>{
- const arm=()=>{if(v.dataset.armed)return;v.dataset.armed='1';v.src=media(v.dataset.film);if(!reduced)v.play().catch(()=>{});};
+ const arm=()=>{if(v.dataset.armed)return;v.dataset.armed='1';v.muted=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.src=media(v.dataset.film);ensurePlay(v);};
  if('IntersectionObserver' in window){
   const io=new IntersectionObserver(ents=>{if(ents.some(en=>en.isIntersecting)){arm();io.disconnect();}},{rootMargin:'240px'});
   io.observe(v);
@@ -517,8 +516,18 @@ $$('.route-lane video[data-film]').forEach(v=>{
 applySound();
 $('#sound-toggle')?.addEventListener('click',e=>{e.stopPropagation();setSound(!soundOn);});
 let tapX=0,tapY=0;
-function playMuted(v){if(!v||reduced)return;v.defaultMuted=true;v.muted=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');if(v.src&&!document.hidden)v.play().catch(()=>{});}
-document.addEventListener('pointerdown',e=>{tapX=e.clientX;tapY=e.clientY;playMuted(liveWorld());},{passive:true});
+document.addEventListener('pointerdown',e=>{tapX=e.clientX;tapY=e.clientY;},{passive:true});
+function ensurePlay(v){
+  if(!v)return;
+  v.defaultMuted=true;v.muted=true;v.autoplay=true;v.loop=true;v.playsInline=true;
+  v.setAttribute('muted','');v.setAttribute('autoplay','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');
+  if(!v.src||document.hidden)return;
+  const go=()=>{if(document.hidden||!v.src)return;const p=v.play();if(p&&p.catch)p.catch(()=>{});};
+  go();
+  if(v.readyState<2){v.addEventListener('loadeddata',go,{once:true});v.addEventListener('canplay',go,{once:true});}
+}
+function unlockFilms(){videos.forEach(ensurePlay);$$('.route-lane video,.fog-stack video').forEach(ensurePlay);}
+['touchstart','pointerdown','click'].forEach(type=>document.addEventListener(type,unlockFilms,{capture:true,passive:true}));
 document.addEventListener('pointerup',e=>{
  if(e.pointerType==='touch')return;
  if(document.body.classList.contains('is-sheet'))return;
