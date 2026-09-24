@@ -16,7 +16,7 @@ function mountInfra(){
  const home=onLife?'#arrival':(onBiz?'/':'#arrival');
  const life=onLife?'#routes':'https://erikhbush.com';
  const daily=onLife?'#daily':'https://erikhbush.com';
- const proof=onLife?'https://transformby10x.ai/bbai':'#proof';
+ const proof=onLife?'https://transformby10x.ai/bbai#proof':'#proof';
  const me=onLife?'/story':'https://erikhbush.com/story';
  const mark=document.createElement('a');
  mark.className='mark';
