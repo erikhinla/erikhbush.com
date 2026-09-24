@@ -104,11 +104,7 @@ function syncBed(name){
   videos.forEach(v=>{v.muted=true;});
   if(!soundOn||!name||name==='off'){stopBed();return;}
   const mapped=SOUND_FILM[name];
-  if(!mapped){
-    stopBed();
-    if(live){live.muted=false;live.volume=1;live.play().catch(()=>{});}
-    return;
-  }
+  if(!mapped){stopBed();return;}
   const b=ensureBed();
   const url=media(mapped);
   if(b.dataset.file!==mapped){
@@ -166,9 +162,7 @@ function changeWorld(name,light=.8,crop){
  next.dataset.file=name;
  next.preload='auto';
  next.setAttribute('preload','auto');
- next.muted=true;
- next.loop=true;
- next.playsInline=true;
+ next.muted=true;next.defaultMuted=true;next.setAttribute('muted','');next.loop=true;next.playsInline=true;next.setAttribute('playsinline','');next.setAttribute('webkit-playsinline','');
  next.poster='assets/'+(name==='proof-world.mp4'?'proof-mood-3':name.replace('.mp4',''))+'.jpg';
  next.src=media(name);
  let shown=false;
@@ -523,8 +517,10 @@ $$('.route-lane video[data-film]').forEach(v=>{
 applySound();
 $('#sound-toggle')?.addEventListener('click',e=>{e.stopPropagation();setSound(!soundOn);});
 let tapX=0,tapY=0;
-document.addEventListener('pointerdown',e=>{tapX=e.clientX;tapY=e.clientY;},{passive:true});
+function playMuted(v){if(!v||reduced)return;v.defaultMuted=true;v.muted=true;v.playsInline=true;v.setAttribute('muted','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');if(v.src&&!document.hidden)v.play().catch(()=>{});}
+document.addEventListener('pointerdown',e=>{tapX=e.clientX;tapY=e.clientY;playMuted(liveWorld());},{passive:true});
 document.addEventListener('pointerup',e=>{
+ if(e.pointerType==='touch')return;
  if(document.body.classList.contains('is-sheet'))return;
  if(Math.hypot(e.clientX-tapX,e.clientY-tapY)>14)return;
  const hit=e.target.closest('a,button,input,textarea,select,summary,label,dialog,.route-lane,.gate-board,.chrome,.site-menu,.sheet,.action,.text-action,.read-link,.family-line,.daily-pay,.method-launch,.mark');
