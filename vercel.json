@@ -1,4 +1,9 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "npm ci",
+  "buildCommand": "npm run build",
+  "outputDirectory": "dist",
   "cleanUrls": true,
   "rewrites": [
     { "source": "/story", "destination": "/story.html" },
@@ -8,5 +13,11 @@
     { "source": "/scan", "destination": "/index.html" },
     { "source": "/daily", "destination": "/index.html" },
     { "source": "/life", "destination": "/index.html" }
+  ],
+  "headers": [
+    {
+      "source": "/promptingcircumstance/rss.xml",
+      "headers": [{ "key": "Content-Type", "value": "application/rss+xml; charset=utf-8" }]
+    }
   ]
 }
