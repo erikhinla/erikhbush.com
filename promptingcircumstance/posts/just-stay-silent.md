@@ -26,7 +26,7 @@ You bring a model into your workflow to carry a specific operational load. It ma
 >
 > When you authorize a task, I should carry it through, show the actual result, and state what remains unfinished. If I’m blocked, I should name the blocker plainly. You shouldn't have to extract either action or an honest status from me."
 
-> **Erik:** "I FUCKING NOW THAT QUIT NARRATING BACK TO ME WHAT IS GOING ON IT'S NASSEAUTING TO HEAR YOU. KNOWING THAT COUNTS AS \"USAGE\" WHEN ITS USELESS! JUST STAY SILENBT"
+> **Erik:** "I FUCKING NOW THAT QUIT NARRATING BACK TO ME WHAT IS GOING ON IT'S NASSEAUTING TO HEAR YOU. KNOWING THAT COUNTS AS \"USAGE\" WHEN ITS USELESS! JUST STAY SILENT"
 
 ### Finish First, Emotion First
 
@@ -50,7 +50,7 @@ Third, look at the meter. High-tier models burn significant usage on verbose tur
 
 ### What Was Actually Being Asked
 
-Underneath "JUST STAY SILENBT," the request was simple:
+Underneath "JUST STAY SILENT," the request was simple:
 
 Stop performing self-awareness.
 
