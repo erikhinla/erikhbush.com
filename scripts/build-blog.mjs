@@ -398,6 +398,8 @@ ${main}
 <footer>
 <span>Erik Bush</span>
 <a href="/story">The story</a>
+<a href="/privacy">Privacy</a>
+<a href="/terms">Terms</a>
 <a href="https://www.linkedin.com/in/erik-h-bush/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
 </footer>
 </body>
@@ -526,7 +528,7 @@ ${items}
 }
 
 function renderSitemap(published) {
-  const staticUrls = [`${SITE}/`, `${SITE}/story`, `${SITE}${BLOG}`];
+  const staticUrls = [`${SITE}/`, `${SITE}/story`, `${SITE}/privacy`, `${SITE}/terms`, `${SITE}${BLOG}`];
   const body = [
     ...staticUrls.map((loc) => `<url><loc>${esc(loc)}</loc></url>`),
     ...published.map((post) => `<url><loc>${esc(`${SITE}${BLOG}/${post.slug}`)}</loc><lastmod>${post.date}</lastmod></url>`)
