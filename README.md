@@ -5,4 +5,4 @@ Life house. Manifesto, gate, Fog Scan, Digital De-Fog Daily, field notes, Foreca
 Work lives at https://transformby10x.ai/bbai
 Do not connect this repo to the TBTX Vercel project.
 
-Blog: https://erikhbush.com/promptingcircumstance — how to add a post is in promptingcircumstance/README.md.
+Blog: https://erikhbush.com/promptingcircumstance. How to add a post is in promptingcircumstance/README.md.

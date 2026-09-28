@@ -334,12 +334,16 @@ function tagList(tags) {
   return `<ul class="tags">${tags.map((tag) => `<li>${esc(tag)}</li>`).join('')}</ul>`;
 }
 
-function coverFigure(post) {
-  if (!post.cover) return '';
-  const local = post.cover.startsWith('/') ? localImage(post.cover) : '';
-  const size = local ? imageSize(local) : null;
-  const dims = size ? ` width="${size.width}" height="${size.height}"` : '';
-  return `<figure class="cover"><img src="${esc(post.cover)}" alt="${esc(post.title)}"${dims}></figure>`;
+function frameFigure(post) {
+  let src = '/assets/erik-portrait.jpg';
+  let dims = '';
+  if (post.cover) {
+    src = post.cover;
+    const local = post.cover.startsWith('/') ? localImage(post.cover) : '';
+    const size = local ? imageSize(local) : null;
+    if (size) dims = ` width="${size.width}" height="${size.height}"`;
+  }
+  return `<figure class="bezel"><div class="bezel-in"><img src="${esc(src)}" alt=""${dims}></div></figure>`;
 }
 
 function layout({ title, description, canonicalPath, image, kind, published, tags, robots, main, jsonLd }) {
@@ -362,16 +366,15 @@ ${image.type ? `<meta property="og:image:type" content="${esc(image.type)}">` : 
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="theme-color" content="#0c0d0b">
+<meta name="theme-color" content="#101111">
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(description)}">
 <meta name="author" content="Erik Bush">
 ${robots ? `<meta name="robots" content="${esc(robots)}">` : ''}
 <link rel="canonical" href="${esc(url)}">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;1,9..144,400;1,9..144,500&amp;family=Instrument+Sans:wght@500;600;700&amp;display=swap">
-<link rel="stylesheet" href="${BLOG}/blog.css">
+<link rel="stylesheet" href="/scrollcraft.css">
+<link rel="stylesheet" href="/arrows.css">
+<link rel="stylesheet" href="/pages.css">
 <link rel="alternate" type="application/rss+xml" title="Prompting Circumstance" href="${SITE}${BLOG}/rss.xml">
 <meta property="og:site_name" content="Erik Bush">
 <meta property="og:type" content="${kind === 'article' ? 'article' : 'website'}">
@@ -386,22 +389,26 @@ ${article}
 <meta name="twitter:description" content="${esc(description)}">${structured}
 </head>
 <body>
+<div class="sc-grain" aria-hidden="true"></div>
 <a class="skip" href="#main">Skip to content</a>
-<header class="nav">
-<a href="/">‹ Fog Scan</a>
-<nav aria-label="Blog">
+<header class="site-nav">
+<a class="mark" href="/">Erik Bush</a>
+<nav aria-label="Site">
 <a href="/story">The story</a>
+<a href="${BLOG}"${kind === 'article' ? '' : ' aria-current="page"'}>The blog</a>
 <a href="${BLOG}/rss.xml">RSS</a>
 </nav>
 </header>
 ${main}
-<footer>
+<footer class="site-foot">
 <span>Erik Bush</span>
+<a href="/">Fog Scan</a>
 <a href="/story">The story</a>
 <a href="/privacy">Privacy</a>
 <a href="/terms">Terms</a>
 <a href="https://www.linkedin.com/in/erik-h-bush/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
 </footer>
+<script src="/reading.js"></script>
 </body>
 </html>
 `;
@@ -410,13 +417,17 @@ ${main}
 function renderIndex(visible, published, showDrafts) {
   const description = 'A blog on erikhbush.com. Newest posts first.';
   const items = visible.map((post) => `<li>
-<article>
+<a class="row" href="${BLOG}/${esc(post.slug)}">
+<div class="row-meta">
 ${post.draft ? '<p class="draft-pill">Draft</p>' : ''}
 <time datetime="${esc(post.date)}">${esc(formatDate(post.date))}</time>
-<h2><a href="${BLOG}/${esc(post.slug)}">${esc(post.title)}</a></h2>
-<p>${esc(post.description)}</p>
+</div>
+<div>
+<h2>${esc(post.title)}</h2>
 ${tagList(post.tags)}
-</article>
+</div>
+<p class="dek">${esc(post.description)}</p>
+</a>
 </li>`).join('\n');
   const note = showDrafts && visible.some((post) => post.draft)
     ? '<p class="preview-note">Drafts show on this preview. They are left off the production site, the RSS feed, and the sitemap.</p>'
@@ -425,11 +436,26 @@ ${tagList(post.tags)}
     ? `<ol class="post-list">${items}</ol>`
     : '<p class="empty">No posts yet.</p>';
   const main = `<main id="main">
-<p class="kicker">Erik Bush</p>
-<h1>Prompting Circumstance</h1>
-<p class="lede">${esc(description)}</p>
+<section class="chapter" aria-label="Prompting Circumstance">
+<div class="chapter-media" aria-hidden="true">
+<video muted autoplay loop playsinline poster="/assets/erik-portrait.jpg" src="/assets/erik-portrait.mp4"></video>
+</div>
+<div class="sc-scrim sc-scrim--left"></div>
+<div class="chapter-copy">
+<p class="eyebrow">Erik Bush</p>
+<h1>Prompting<br>Circumstance</h1>
+<p class="chapter-line">${esc(description)}</p>
+<a class="text-action" href="#index">The notes <span class="arr arr-down" aria-hidden="true"></span></a>
+</div>
+</section>
+<section class="roll" id="index">
+<div class="roll-head">
+<p class="eyebrow">Filed</p>
+<p class="roll-count">Newest first</p>
+</div>
 ${note}
 ${list}
+</section>
 </main>`;
   return layout({
     title: 'Prompting Circumstance · Erik Bush',
@@ -461,17 +487,24 @@ function renderPost(post) {
   const image = shareImage(post.cover, post.title);
   const main = `<main id="main">
 <article>
-<p class="kicker"><a href="${BLOG}">Prompting Circumstance</a></p>
+<header class="post-open">
+<div class="post-copy">
+<p class="post-kicker"><a href="${BLOG}">Prompting Circumstance</a></p>
 <p class="meta"><time datetime="${esc(post.date)}">${esc(formatDate(post.date))}</time></p>
 ${post.draft ? '<p class="draft-pill">Draft</p>' : ''}
 <h1>${esc(post.title)}</h1>
-<p class="dek">${esc(post.description)}</p>
+<p class="post-dek">${esc(post.description)}</p>
 ${tagList(post.tags)}
-${coverFigure(post)}
+</div>
+${frameFigure(post)}
+</header>
+<div class="reading" data-sc-in>
+<p class="reading-mark">Note</p>
 <div class="prose">
 ${html}
 </div>
-<p class="end"><a href="${BLOG}">‹ All posts</a></p>
+</div>
+<p class="post-close"><a class="text-action" href="${BLOG}"><span class="arr arr-left" aria-hidden="true"></span> All posts</a></p>
 </article>
 </main>`;
   return layout({
@@ -555,7 +588,6 @@ function mirrorSite() {
   }
   const blogDist = join(DIST, 'promptingcircumstance');
   mkdirSync(blogDist, { recursive: true });
-  cpSync(join(ROOT, 'promptingcircumstance', 'blog.css'), join(blogDist, 'blog.css'));
   const images = join(ROOT, 'promptingcircumstance', 'images');
   if (existsSync(images)) cpSync(images, join(blogDist, 'images'), { recursive: true });
 }
