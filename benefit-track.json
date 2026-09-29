@@ -75,7 +75,7 @@
       "name": "Scan",
       "mode": "silent",
       "line": null,
-      "cue": "8 answers. One place it sits.",
+      "cue": "8 answers. A starting point.",
       "register": "relief",
       "release": false,
       "publishAllowed": true,

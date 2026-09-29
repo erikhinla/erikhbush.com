@@ -345,7 +345,7 @@ const SCANOUT={
  'Carrying it':{
   pattern:'The day does not sit down as one thing. What you meant to do waits while you hunt, rewrite, and hold unfinished loops in your head.',
   pressure:'You are the filing system. If the phone went down, the map would go with it.',
-  repair:'Picking one surface and making one thing findable. That is where the fog sits. It is not the whole day.'
+  repair:'Picking one surface and making one thing findable. That is where the daily starts. It is not the whole day.'
  },
  'Clear enough':{
   pattern:'You can put a hand on the thing. The leftover work still exists, and it has a place.',
@@ -356,7 +356,7 @@ const SCANOUT={
 function renderScan(r,qs){
  const voice=SCANOUT[r.band]||SCANOUT['Carrying it'];
  const math=`<details class="result-math"><summary>The answer arithmetic</summary><div class="score-number">${r.result}<small>/100</small></div><p class="result-formula">round(100 × ${r.raw} ÷ ${r.max}) = ${r.result}</p><p>Carrying it 0-49 · Clear enough 50-100.</p><p>This reflects the answers given. It isn't measured productivity, hours saved or a diagnosis.</p><details><summary>The answers, one by one</summary>${qs.map((q,i)=>`<div class="answer-record"><strong>${q.id}. ${escape(q.text)}</strong><p>${escape(q.options[state.selections[i]].text)}</p><small>${pointLabel(r.values[i])}</small></div>`).join('')}</details></details>`;
- return `<div class="readout scan-handoff"><h2 id="question-title" tabindex="-1">Where the fog sits</h2><p class="said">${sayPersonal(qs,state.selections)}</p><p class="ev">Reported. Those are your selections. Nothing was added.</p><div class="trace-step"><b>The pattern</b><p>${voice.pattern}</p></div><div class="trace-step"><b>The pressure</b><p>${voice.pressure}</p></div><div class="trace-step"><b>The likely human repair</b><p>${voice.repair}</p></div><p class="readout-close">This is what you reported, not what we measured.</p>${math}<div class="result-ctas"><button class="action lane-life" id="result-next">Start Digital De-Fog Daily <span class="arr" aria-hidden="true"></span></button></div><button class="text-action" id="review-answers">Review answers <i class="arr" aria-hidden="true"></i></button></div>`;
+ return `<div class="readout scan-handoff"><h2 id="question-title" tabindex="-1">The starting point</h2><p class="said">${sayPersonal(qs,state.selections)}</p><p class="ev">Reported. Those are your selections. Nothing was added.</p><div class="trace-step"><b>The pattern</b><p>${voice.pattern}</p></div><div class="trace-step"><b>The pressure</b><p>${voice.pressure}</p></div><div class="trace-step"><b>The likely human repair</b><p>${voice.repair}</p></div><p class="readout-close">This is what you reported, not what we measured.</p>${math}<div class="result-ctas"><button class="action lane-life" id="result-next">Start Digital De-Fog Daily <span class="arr" aria-hidden="true"></span></button></div><button class="text-action" id="review-answers">Review answers <i class="arr" aria-hidden="true"></i></button></div>`;
 }
 function renderReadout(r,qs){
  const voice=READOUT[r.band]||READOUT.Stalled;
@@ -372,7 +372,7 @@ function renderResult(){const r=score(state.lane,state.selections);if(!r)return;
   $('#question-body').innerHTML=renderReadout(r,qs);
  }else{
   $('#questionnaire')?.classList.add('is-handoff');
-  $('#question-lane').textContent='Digital Fog Scan / Where the fog sits';
+  $('#question-lane').textContent='Digital Fog Scan / The starting point';
   $('#question-body').innerHTML=renderScan(r,qs);
  }
  $('#result-next').onclick=()=>{close('questionnaire');if(state.lane==='business')open('trace');else window.DDD.open();};$('#review-answers').onclick=()=>{state.step=0;renderQuestion();focusQuestion();};modalWorld();focusQuestion();}
