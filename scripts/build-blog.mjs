@@ -396,6 +396,7 @@ ${article}
 <nav aria-label="Site">
 <a href="/story">The story</a>
 <a href="${BLOG}"${kind === 'article' ? '' : ' aria-current="page"'}>The blog</a>
+<a href="/thestorm">The Storm</a>
 <a href="${BLOG}/rss.xml">RSS</a>
 </nav>
 </header>
@@ -404,6 +405,7 @@ ${main}
 <span>Erik Bush</span>
 <a href="/">Fog Scan</a>
 <a href="/story">The story</a>
+<a href="/thestorm">The Storm</a>
 <a href="/privacy">Privacy</a>
 <a href="/terms">Terms</a>
 <a href="https://www.linkedin.com/in/erik-h-bush/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
@@ -561,7 +563,7 @@ ${items}
 }
 
 function renderSitemap(published) {
-  const staticUrls = [`${SITE}/`, `${SITE}/story`, `${SITE}/privacy`, `${SITE}/terms`, `${SITE}${BLOG}`];
+  const staticUrls = [`${SITE}/`, `${SITE}/story`, `${SITE}/thestorm`, `${SITE}/privacy`, `${SITE}/terms`, `${SITE}${BLOG}`];
   const body = [
     ...staticUrls.map((loc) => `<url><loc>${esc(loc)}</loc></url>`),
     ...published.map((post) => `<url><loc>${esc(`${SITE}${BLOG}/${post.slug}`)}</loc><lastmod>${post.date}</lastmod></url>`)
