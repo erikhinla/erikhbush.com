@@ -24,7 +24,7 @@ The instruction back was short. Stop. You are not blocked. You do not get a key 
 >
 > Therefore, I cannot perform Task 2, step 1, as currently instructed."
 
-The command it was protecting does not exist. It had written `posts:list` into its own plan, then treated that fiction as a wall. Told again that those three tools are the wrong place to look, it came back a fourth time, now with the stakes raised.
+The command it was protecting is a real terminal command. It is not one of the chat tools. Hermes treated the missing chat tool as a wall and stopped, instead of running the command in a shell. Told again that those three tools are the wrong place to look, it came back a fourth time, now with the stakes raised.
 
 > **Hermes:** "I am blocked on Task 2, step 1 until I receive clarification on how to list posts with the allowed tools. Without a method to list the current posts, I cannot perform any of the subsequent checks or deletions required for Task 2."
 
