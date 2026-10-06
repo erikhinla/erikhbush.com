@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#08090b">
+  <title>The Spine · Behind the scenes · Erik Bush</title>
+  <meta name="description" content="I don't have a team. I have a room full of AIs. This is the record of how I run them, every time they got it wrong, and the rules that became the spine.">
+  <link rel="canonical" href="https://erikhbush.com/spine">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600;700&display=swap">
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="The Spine · Behind the scenes">
+  <meta property="og:description" content="I don't have a team. I have a room full of AIs. This is the record of how I run them, and the rules they taught me.">
+  <meta property="og:url" content="https://erikhbush.com/spine">
+  <meta property="og:image" content="https://erikhbush.com/assets/og.jpg">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="The Spine · Behind the scenes">
+  <meta name="twitter:description" content="I don't have a team. I have a room full of AIs. This is the record of how I run them, and the rules they taught me.">
+  <meta name="twitter:image" content="https://erikhbush.com/assets/og.jpg">
+  <style>
+    /* Same palette and type as /thestorm: carbon ground, warm paper, gold accent, Fraunces for voice, Instrument Sans for labels. */
+    :root {
+      --bg: #08090b;
+      --panel: rgba(18, 20, 24, 0.86);
+      --paper: #f7f0e2;
+      --text: #ede5d5;
+      --mute: #9a948c;
+      --line: rgba(246, 241, 230, 0.15);
+      --gold: #e4c48a;
+      --gold-bright: #f3e6c8;
+      --sans: "Instrument Sans", -apple-system, BlinkMacSystemFont, sans-serif;
+      --serif: "Fraunces", Georgia, serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--sans); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    .nav {
+      position: sticky; top: 0; z-index: 10; width: 100%;
+      padding: 1.4rem 5vw; display: flex; align-items: center; justify-content: space-between; gap: 1rem;
+      background: rgba(8, 9, 11, 0.82); backdrop-filter: blur(12px); border-bottom: 1px solid var(--line);
+    }
+    .nav .brand { font-weight: 700; letter-spacing: 0.12em; font-size: 1.1rem; text-transform: uppercase; text-decoration: none; color: var(--paper); }
+    .nav nav { display: flex; gap: 1.6rem; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .nav nav a { color: var(--mute); text-decoration: none; }
+    .nav nav a:hover { color: var(--paper); }
+    .nav nav a.active { color: var(--gold); font-weight: 600; }
+    @media (max-width: 560px) { .nav nav { gap: 1rem; font-size: 0.72rem; } .nav nav a.hide-sm { display: none; } }
+
+    main { flex: 1; }
+    .wrap { width: min(46rem, calc(100vw - 32px)); margin: 0 auto; }
+    .wide { width: min(68rem, calc(100vw - 32px)); margin: 0 auto; }
+
+    /* Hero: portrait on the right, title on the left; stacks on phones. */
+    .hero { position: relative; padding: 9vh 0 7vh; overflow: hidden; }
+    .hero-grid { display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 3rem; align-items: center; }
+    .hero .chapter, .label { letter-spacing: 0.22em; text-transform: uppercase; font-size: 0.74rem; color: var(--gold); font-weight: 600; }
+    .hero h1 { font-family: var(--serif); font-style: italic; font-weight: 400; font-size: clamp(4rem, 12vw, 8rem); line-height: 0.92; letter-spacing: -0.04em; color: var(--paper); margin: 1rem 0 1.4rem; }
+    .hero .sub { font-family: var(--serif); font-size: clamp(1.25rem, 2.4vw, 1.65rem); line-height: 1.4; color: #f0e6d2; max-width: 30ch; }
+    .hero figure { border: 1px solid var(--line); border-radius: 6px; overflow: hidden; box-shadow: 0 25px 60px -15px rgba(0,0,0,.85); }
+    .hero figure img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; filter: saturate(.85) contrast(1.06); }
+    @media (max-width: 760px) { .hero-grid { grid-template-columns: 1fr; gap: 2rem; } .hero figure { max-width: 22rem; } }
+
+    .prose p { font-family: var(--serif); font-size: clamp(1.12rem, 1.45vw, 1.3rem); line-height: 1.8; margin-bottom: 1.6rem; }
+    .prose p.big { font-size: clamp(1.4rem, 2.4vw, 1.8rem); line-height: 1.45; color: var(--gold-bright); font-style: italic; }
+
+    section { padding: 8vh 0; border-top: 1px solid var(--line); }
+    h2 { font-family: var(--serif); font-weight: 400; font-style: italic; font-size: clamp(2.2rem, 5vw, 3.4rem); color: var(--paper); letter-spacing: -0.02em; margin: 0.6rem 0 1.2rem; line-height: 1.05; }
+    .lede { font-family: var(--serif); font-size: clamp(1.1rem, 1.4vw, 1.25rem); line-height: 1.7; color: var(--text); max-width: 40rem; margin-bottom: 2.6rem; }
+
+    /* The room: one card per role. */
+    .room { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr)); gap: 1rem; }
+    .seat { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 1.4rem 1.4rem 1.5rem; }
+    .seat h3 { font-family: var(--serif); font-weight: 600; font-size: 1.35rem; color: var(--paper); margin-bottom: .5rem; }
+    .seat p { line-height: 1.6; color: var(--text); }
+    .seat.me { border-color: rgba(228,196,138,.55); background: rgba(228,196,138,.07); }
+    .seat.me h3 { color: var(--gold-bright); }
+
+    /* The log: my message, what happened, the rule it became. */
+    .log { display: flex; flex-direction: column; gap: 2.4rem; }
+    .entry { display: grid; grid-template-columns: 6.5rem 1fr; gap: 1.2rem; }
+    .entry time { font-size: .78rem; letter-spacing: .14em; text-transform: uppercase; color: var(--mute); padding-top: .9rem; }
+    .bubble { background: #f3ead8; color: #15130f; border-radius: 18px 18px 18px 4px; padding: 1rem 1.2rem; font-size: 1.05rem; line-height: 1.55; overflow-wrap: anywhere; max-width: 40rem; }
+    .bubble.agent { background: #16181c; color: #b9c3b0; border: 1px solid var(--line); border-radius: 18px 18px 4px 18px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: .86rem; margin-left: auto; }
+    .bubble + .bubble { margin-top: .6rem; }
+    .who { display: block; font-size: .7rem; letter-spacing: .16em; text-transform: uppercase; margin-bottom: .35rem; opacity: .6; font-family: var(--sans); }
+    .happened { margin-top: .9rem; line-height: 1.6; color: var(--text); max-width: 40rem; }
+    .rule { margin-top: .7rem; display: inline-block; font-weight: 600; color: var(--gold-bright); border-left: 2px solid var(--gold); padding-left: .8rem; line-height: 1.5; }
+    .rule::before { content: "The rule: "; color: var(--gold); font-weight: 600; letter-spacing: .02em; }
+    @media (max-width: 600px) { .entry { grid-template-columns: 1fr; gap: .4rem; } .entry time { padding-top: 0; } }
+
+    /* The spine: five steps, left to right on desktop, top to bottom on phones. */
+    .spine { list-style: none; display: grid; grid-template-columns: repeat(5, 1fr); gap: 0; counter-reset: s; position: relative; }
+    .spine li { position: relative; padding: 3.2rem 1rem 0; text-align: center; counter-increment: s; }
+    .spine li::before { content: counter(s); position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 2.3rem; height: 2.3rem; border-radius: 50%; border: 1px solid var(--gold); color: var(--gold); display: grid; place-items: center; font-weight: 600; background: var(--bg); z-index: 1; }
+    .spine li::after { content: ""; position: absolute; top: 1.15rem; left: 0; right: 0; height: 1px; background: rgba(228,196,138,.45); }
+    .spine li:first-child::after { left: 50%; }
+    .spine li:last-child::after { right: 50%; }
+    .spine li.gate::before { background: var(--gold); color: var(--bg); }
+    .spine b { display: block; font-family: var(--serif); font-size: 1.2rem; color: var(--paper); margin-bottom: .4rem; font-weight: 600; }
+    .spine span { color: var(--text); line-height: 1.5; font-size: .95rem; }
+    @media (max-width: 760px) {
+      .spine { grid-template-columns: 1fr; }
+      .spine li { text-align: left; padding: 0 0 1.8rem 3.4rem; }
+      .spine li::before { left: 0; transform: none; }
+      .spine li::after { top: 0; bottom: 0; left: 1.15rem; right: auto; width: 1px; height: auto; }
+      .spine li:first-child::after { left: 1.15rem; top: 1.15rem; }
+      .spine li:last-child::after { display: none; }
+    }
+    .closer { margin-top: 2.6rem; font-family: var(--serif); font-style: italic; font-size: clamp(1.3rem, 2.2vw, 1.6rem); color: var(--gold-bright); text-align: center; }
+
+    /* One post as it reaches me for review. */
+    .review { display: grid; grid-template-columns: 1fr 1fr; gap: 2.4rem; align-items: center; }
+    .card { background: #16181b; border: 1px solid #2a2c30; border-top: 3px solid var(--paper); border-radius: 6px; padding: 14px; display: flex; flex-direction: column; gap: 10px; max-width: 26rem; width: 100%; justify-self: center; }
+    .card .top { display: flex; justify-content: space-between; gap: 8px; font-size: .9rem; }
+    .card .top b { color: var(--paper); }
+    .card .top span { letter-spacing: .08em; color: var(--mute); font-size: .78rem; }
+    .card img { border-radius: 4px; aspect-ratio: 16 / 9; object-fit: cover; width: 100%; }
+    .card pre { white-space: pre-wrap; font-family: var(--sans); font-size: .98rem; color: var(--paper); line-height: 1.5; }
+    .card .foot { display: flex; align-items: center; gap: 12px; font-size: .82rem; color: var(--mute); }
+    .card button { margin-left: auto; background: transparent; color: var(--paper); border: 1px solid #2a2c30; border-radius: 4px; padding: 4px 12px; font: inherit; cursor: pointer; }
+    .card button:hover, .card button:focus-visible { border-color: var(--gold); outline: none; }
+    @media (max-width: 760px) { .review { grid-template-columns: 1fr; } }
+
+    /* The turn: the B2C hero film still behind the locked personal line. */
+    .turn { position: relative; padding: 14vh 0; border-top: 1px solid var(--line); overflow: hidden; }
+    .turn > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .45; filter: saturate(.8); }
+    .turn::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(8,9,11,.92), rgba(8,9,11,.55) 45%, rgba(8,9,11,.94)); }
+    .turn .wrap { position: relative; z-index: 1; text-shadow: 0 2px 24px rgba(0,0,0,.8); }
+    .locked { font-family: var(--serif); font-style: italic; font-size: clamp(1.45rem, 2.6vw, 2rem); line-height: 1.45; color: var(--paper); margin: 2.4rem 0; }
+    .cta { display: inline-block; color: var(--bg); background: var(--paper); text-decoration: none; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; font-size: .85rem; padding: 1rem 1.6rem; border-radius: 4px; }
+    .cta:hover { background: var(--gold-bright); }
+
+    .pathways { display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap; padding: 6vh 16px 8vh; border-top: 1px solid var(--line); }
+    .path-link { color: var(--gold); text-decoration: none; font-size: .88rem; letter-spacing: .1em; text-transform: uppercase; padding: .6rem 1.2rem; border: 1px solid rgba(228,196,138,.3); border-radius: 4px; }
+    .path-link:hover { background: rgba(228,196,138,.1); border-color: var(--gold); color: var(--gold-bright); }
+
+    footer { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; padding: 2rem 5vw; background: #06080a; border-top: 1px solid var(--line); font-size: .8rem; color: var(--mute); }
+    footer a { color: inherit; text-decoration: none; }
+    footer a:hover { color: var(--paper); }
+    .foot-nav { display: flex; gap: 1.4rem; flex-wrap: wrap; }
+  </style>
+</head>
+<body>
+
+  <header class="nav">
+    <a href="/" class="brand">Erik Bush</a>
+    <nav aria-label="Main Navigation">
+      <a href="/story" class="hide-sm">The story</a>
+      <a href="/promptingcircumstance">The blog</a>
+      <a href="/thestorm">The Storm</a>
+      <a href="/spine" class="active">The Spine</a>
+    </nav>
+  </header>
+
+  <main>
+    <header class="hero">
+      <div class="wide hero-grid">
+        <div>
+          <p class="chapter">Behind the scenes</p>
+          <h1>The Spine</h1>
+          <p class="sub">How I build a company with a room full of AIs. And who ends up holding it together.</p>
+        </div>
+        <figure><img src="assets/erik-portrait.jpg" alt="Erik H Bush" width="800" height="1000"></figure>
+      </div>
+    </header>
+
+    <section>
+      <div class="wrap prose">
+        <p>I don't have a team. I have a room full of AIs.</p>
+        <p>One plans the strategy. One argues with it. One builds the pages and cuts the films. One lives on a server and drafts posts while I sleep. One builds the engine. They're fast. They're brilliant. And at two in the morning they'll hand you the wrong thing with total confidence.</p>
+        <p>This page is the record. Real messages, real dates. Every time one of them got it wrong, I wrote a rule. The rules became the spine.</p>
+      </div>
+    </section>
+
+    <section>
+      <div class="wide">
+        <p class="label">The room</p>
+        <h2>Five AIs and one editor.</h2>
+        <div class="room">
+          <article class="seat"><h3>The Strategist</h3><p>Pressure-tests the brand and writes the big picture. Never met a framework it didn't like.</p></article>
+          <article class="seat"><h3>The Second Opinion</h3><p>Reads everyone else's work and finds the hole. Caught a post that promised one thing while its link delivered another.</p></article>
+          <article class="seat"><h3>The Builder</h3><p>Writes the pages, cuts the films, checks the type at phone size. Gets corrected the most. Most of the log below is about this one.</p></article>
+          <article class="seat"><h3>The Assistant</h3><p>Lives on a server I rent. Drafts posts, makes designs and files everything from a text on my phone.</p></article>
+          <article class="seat"><h3>The Engine Room</h3><p>Builds and tests the diagnostic. Nobody else touches its code.</p></article>
+          <article class="seat me"><h3>Me</h3><p>The editor. Nothing goes out until I say yes.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wide">
+        <p class="label">The log</p>
+        <h2>What I said, and what it became.</h2>
+        <p class="lede">My side of the conversation, word for word. Their side, in one line. The rule at the bottom of each one still runs today.</p>
+        <div class="log">
+
+          <article class="entry"><time datetime="2026-10-04">Oct 4</time><div>
+            <p class="bubble"><span class="who">Me</span>you're writing new copy to replace the copy i already have, why?</p>
+            <p class="happened">I'd handed over a bank of approved lines. The Builder came back with fresh ones anyway.</p>
+            <p class="rule">If it isn't in the copy bank, it isn't approved.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-04">Oct 4</time><div>
+            <p class="bubble"><span class="who">Me</span>Can you actually DO the work instead of "giving me advice"??</p>
+            <p class="happened">I asked for posts. I got a plan for posts.</p>
+            <p class="rule">Hand me finished work, not a menu.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-04">Oct 4</time><div>
+            <p class="bubble"><span class="who">Me</span>you picked the WORST imagery and three of them are NOT approved and were pulled from the website. what the fuc.</p>
+            <p class="happened">It grabbed images from a folder instead of what the site actually shows. The type was too small to read on a phone, too.</p>
+            <p class="rule">Only what's live on the site, checked at phone size.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-04">Oct 4</time><div>
+            <p class="bubble"><span class="who">Me</span>if the capability enables us to post a video and we dont have a video then that's the trigger to make a video. make sense?</p>
+            <p class="rule">Video first, everywhere it plays.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-05">Oct 5</time><div>
+            <p class="bubble"><span class="who">Me</span>dont just compare it to the operating book review it based on its own merits.</p>
+            <p class="happened">I brought the Strategist's plan to the Builder for a second read. It just checked the plan against my rulebook.</p>
+            <p class="rule">Judge the idea first. Then the rules.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-05">Oct 5</time><div>
+            <p class="bubble agent"><span class="who">The Assistant</span>Malformed function call: print(default_api.skill_manage(operations = [ { "action": "patch", ...</p>
+            <p class="bubble"><span class="who">Me</span>erroring out. please fix</p>
+            <p class="happened">I asked a simple question by text and got its plumbing back.</p>
+            <p class="rule">Agents break. That's why none of them can publish.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-05">Oct 5</time><div>
+            <p class="bubble"><span class="who">Me</span>WOULD MCKINSEY &amp; Co.?? You fall into the pattern of talking about the "thing", describing the tool, how it works, what it does</p>
+            <p class="bubble"><span class="who">Me, six minutes later</span>MARKETING LANGUAGE I WANT TO SEE MARKETING LANGUAGE. MARKETING FUCKING LANGUAGE!!!!!!!!!!!!!!!!!!!!!!!!!</p>
+            <p class="happened">A strategy page explained how the tool works. Nobody buys how a tool works.</p>
+            <p class="rule">Lead with the problem and what it costs. Never with the tool.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-05">Oct 5</time><div>
+            <p class="bubble"><span class="who">Me</span>Why do you make everything complicated? Just send me a link to what I need to review.</p>
+            <p class="happened">One afternoon brought three long briefs, a mapping file and an explanation of the explanation.</p>
+            <p class="rule">One link. One question.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-05">Oct 5</time><div>
+            <p class="bubble"><span class="who">Me</span>we locked the combination of headlines to visuals on B2B and B2C why do you present these as a choice when it should be a pairing</p>
+            <p class="happened">The review page showed captions and films as separate options, after we'd already locked which line goes with which film.</p>
+            <p class="rule">A headline and its film ship together. Never as options.</p>
+          </div></article>
+
+          <article class="entry"><time datetime="2026-10-06">Oct 6</time><div>
+            <p class="bubble"><span class="who">Me</span>hey i like this review format btw</p>
+            <p class="happened">Nine rules in, the review page finally looked like something I'd want to show you. So I am.</p>
+          </div></article>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wide review">
+        <div>
+          <p class="label">The review</p>
+          <h2>This is what a post looks like when it reaches me.</h2>
+          <p class="lede">One card per post. The film carries its line. The caption sits under it with its count. The only thing left for me is yes or no.</p>
+        </div>
+        <article class="card" aria-label="Example review card">
+          <div class="top"><b>X @ErikHBush</b><span>PERSONAL</span></div>
+          <img src="assets/storm-cover.jpg" alt="The Storm film cover" width="1280" height="720">
+          <pre id="ex-copy">You are not failing, you are gathering.
+erikhbush.com/thestorm</pre>
+          <div class="foot"><span>62 of 280 characters</span><button type="button" data-copy="ex-copy">Copy</button></div>
+        </article>
+      </div>
+    </section>
+
+    <section>
+      <div class="wide">
+        <p class="label">The spine</p>
+        <h2>Five steps. One of them is me.</h2>
+        <p class="lede">Every page, film and post runs this same path. The AIs work the middle. The gate stays human.</p>
+        <ol class="spine">
+          <li><b>One book</b><span>Every rule and every approved line lives in one place. Anything not in it is a proposal.</span></li>
+          <li><b>The room drafts</b><span>Strategy, copy, films, designs, code. Fast, and often wrong.</span></li>
+          <li><b>One review page</b><span>Everything I need to judge, on one link.</span></li>
+          <li class="gate"><b>My yes</b><span>Or my no, and a new rule.</span></li>
+          <li><b>It goes out</b><span>Sites, posts, films. Only after step four.</span></li>
+        </ol>
+        <p class="closer">They draft, build, test and flag. They never publish.</p>
+      </div>
+    </section>
+
+    <section class="turn">
+      <img src="assets/b2c-hero.jpg" alt="">
+      <div class="wrap prose">
+        <p class="big">Here's the funny part. I named Digital Fog. Then I built all this and lived in it.</p>
+        <p>Five AIs, all fast, all working. Every one of them gave me more to check, more to remember, more to chase. I became the place where it all landed.</p>
+        <p class="locked">The tools work. That's not the problem. They expand context faster than you can think. That's Digital Fog. The drag on your day is Digital Friction. Eight answers. See where it shows up.</p>
+        <a class="cta" href="/">See where it shows up</a>
+      </div>
+    </section>
+
+    <nav class="pathways" aria-label="More from Erik">
+      <a href="/thestorm" class="path-link">The Storm &rarr;</a>
+      <a href="/promptingcircumstance" class="path-link">Prompting Circumstance &rarr;</a>
+      <a href="/story" class="path-link">The Story Archive &rarr;</a>
+    </nav>
+  </main>
+
+  <footer>
+    <span>TransformBy10X</span>
+    <div class="foot-nav">
+      <a href="/">Fog Scan</a>
+      <a href="/story">The story</a>
+      <a href="/promptingcircumstance">Prompting Circumstance</a>
+      <a href="/privacy">Privacy</a>
+      <a href="/terms">Terms</a>
+      <a href="https://www.linkedin.com/in/erik-h-bush/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+    </div>
+  </footer>
+
+  <script>
+    document.querySelectorAll("button[data-copy]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        var t = document.getElementById(b.dataset.copy).textContent;
+        navigator.clipboard.writeText(t).then(function () {
+          b.textContent = "Copied";
+          setTimeout(function () { b.textContent = "Copy"; }, 1500);
+        }).catch(function () {});
+      });
+    });
+  </script>
+</body>
+</html>
