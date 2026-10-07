@@ -53,10 +53,10 @@ function writePost(name, body) {
 try {
   let result = build({ VERCEL_ENV: 'production', INCLUDE_DRAFTS: '' });
   check(result.status === 0, `production build failed\n${result.stderr}`);
-  check(read('promptingcircumstance/index.html').includes('Placeholder: the first post goes here'), 'welcome post missing from index');
-  check(read('promptingcircumstance/welcome/index.html').includes('id="a-heading"'), 'welcome prose missing');
-  check(read('promptingcircumstance/welcome/index.html').includes('property="og:title" content="Placeholder: the first post goes here"'), 'og title missing');
-  check(read('promptingcircumstance/welcome/index.html').includes('name="twitter:card" content="summary_large_image"'), 'twitter card missing');
+  check(read('promptingcircumstance/index.html').includes('Just Stay Silent'), 'published post missing from index');
+  check(read('promptingcircumstance/just-stay-silent/index.html').includes('id="the-circumstance"'), 'post prose missing');
+  check(read('promptingcircumstance/just-stay-silent/index.html').includes('property="og:title" content="Just Stay Silent"'), 'og title missing');
+  check(read('promptingcircumstance/just-stay-silent/index.html').includes('name="twitter:card" content="summary_large_image"'), 'twitter card missing');
   check(!existsSync(join(DIST, 'promptingcircumstance/README.md')), 'agent instructions were published');
   check(!existsSync(join(DIST, 'promptingcircumstance/posts')), 'markdown source was published');
   for (const file of ['index.html', 'story.html', 'hang.html', 'experience.js', 'scrollcraft.css', 'benefit-track.json']) {
@@ -105,9 +105,9 @@ Secret draft body.
   check(result.status === 0, `production build with fixtures failed\n${result.stderr}`);
   const prodList = read('promptingcircumstance/index.html').split('class="post-list"')[1] || '';
   const newerAt = prodList.indexOf('Newer note');
-  const welcomeAt = prodList.indexOf('Placeholder: the first post goes here');
+  const silentAt = prodList.indexOf('Just Stay Silent');
   const olderAt = prodList.indexOf('Older note');
-  check(newerAt !== -1 && welcomeAt !== -1 && olderAt !== -1 && newerAt < welcomeAt && welcomeAt < olderAt, 'posts are not newest first');
+  check(newerAt !== -1 && silentAt !== -1 && olderAt !== -1 && newerAt < silentAt && silentAt < olderAt, 'posts are not newest first');
   check(!read('promptingcircumstance/index.html').includes('Hidden draft'), 'draft appeared on the production index');
   check(!existsSync(join(DIST, 'promptingcircumstance/hidden-draft/index.html')), 'draft page was built for production');
   check(!read('promptingcircumstance/rss.xml').includes('Hidden draft'), 'draft appeared in RSS');
@@ -176,7 +176,7 @@ const finalBuild = build({ VERCEL_ENV: 'production', INCLUDE_DRAFTS: '' });
 check(finalBuild.status === 0, `final production build failed\n${finalBuild.stderr}`);
 check(!read('promptingcircumstance/index.html').includes('Hidden draft'), 'draft survived cleanup');
 check(!read('promptingcircumstance/index.html').includes('Newer note'), 'fixture post survived cleanup');
-check(read('promptingcircumstance/index.html').includes('Placeholder: the first post goes here'), 'welcome post missing after cleanup');
+check(read('promptingcircumstance/index.html').includes('Just Stay Silent'), 'published post missing after cleanup');
 
 const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
 check(vercel.cleanUrls === true, 'cleanUrls was turned off');
@@ -254,9 +254,9 @@ await new Promise((resolve, reject) => {
       ['/daily', 'Digital De-Fog Daily'],
       ['/life', 'AI'],
       ['/promptingcircumstance', 'Prompting Circumstance'],
-      ['/promptingcircumstance/welcome', 'A heading'],
+      ['/promptingcircumstance/just-stay-silent', 'The Circumstance'],
       ['/promptingcircumstance/rss.xml', '<rss version="2.0"'],
-      ['/sitemap.xml', 'https://erikhbush.com/promptingcircumstance/welcome'],
+      ['/sitemap.xml', 'https://erikhbush.com/promptingcircumstance/just-stay-silent'],
       ['/robots.txt', 'Sitemap: https://erikhbush.com/sitemap.xml'],
       ['/scrollcraft.css', ''],
       ['/assets/og.jpg', '']
