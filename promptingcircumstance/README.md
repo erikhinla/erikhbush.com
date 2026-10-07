@@ -19,8 +19,6 @@ Filename rules:
 - Do not put the date in the filename. The date lives in front matter.
 - Do not use spaces, underscores, or uppercase letters.
 
-`welcome.md` is a labeled placeholder so the layout can be reviewed. Leave it alone unless Erik asks you to replace or remove it.
-
 ## Front matter
 
 The file must start with YAML front matter:
