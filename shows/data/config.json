@@ -1,0 +1,16 @@
+{
+  "siteUrl": "https://erikhbush.com",
+  "xHandle": "CONFIG_SET_ERIK_PERSONAL_X_HANDLE",
+  "shows": [
+    {
+      "slug": "pc-news",
+      "title": "PC News",
+      "fullTitle": "PC News (Prompting Circumstance)",
+      "tagline": "AI x Human stories, reported straight and told sideways.",
+      "description": "PC News (Prompting Circumstance) is a satirical news segment about what happens when people and AI share the same room.",
+      "episodesFile": "pc-news.episodes.json",
+      "status": "live"
+    }
+  ],
+  "spinoffSlots": 3
+}
