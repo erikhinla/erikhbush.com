@@ -187,9 +187,9 @@ check(JSON.stringify(vercel.rewrites) === JSON.stringify([
   { source: '/hang', destination: '/hang.html' },
   { source: '/hang/:slug', destination: '/hang.html' },
   { source: '/hang/:slug/', destination: '/hang.html' },
-  { source: '/scan', destination: '/index.html' },
-  { source: '/daily', destination: '/index.html' },
-  { source: '/life', destination: '/index.html' }
+  { source: '/scan', destination: '/scan.html' },
+  { source: '/daily', destination: '/scan.html' },
+  { source: '/life', destination: '/scan.html' }
 ]), 'rewrites changed');
 
 function resolveFile(urlPath) {
@@ -197,7 +197,7 @@ function resolveFile(urlPath) {
   let dest = path;
   if (path === '/story') dest = '/story.html';
   else if (path === '/hang' || path.startsWith('/hang/')) dest = '/hang.html';
-  else if (path === '/scan' || path === '/daily' || path === '/life') dest = '/index.html';
+  else if (path === '/scan' || path === '/daily' || path === '/life') dest = '/scan.html';
   const rel = dest.replace(/^\//, '');
   const candidates = [join(DIST, rel)];
   if (!extname(dest)) {
@@ -237,7 +237,8 @@ await new Promise((resolve, reject) => {
   server.listen(0, '127.0.0.1', () => {
     const port = server.address().port;
     const paths = [
-      ['/', 'Digital Fog Scan'],
+      ['/', 'We must learn to be'],
+      ['/', 'href="/promptingcircumstance/passing-notes"'],
       ['/story', 'Field notes'],
       ['/story', 'Prompting Circumstance'],
       ['/story', 'href="/privacy"'],

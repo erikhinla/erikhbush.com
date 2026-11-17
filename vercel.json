@@ -10,9 +10,9 @@
     { "source": "/hang", "destination": "/hang.html" },
     { "source": "/hang/:slug", "destination": "/hang.html" },
     { "source": "/hang/:slug/", "destination": "/hang.html" },
-    { "source": "/scan", "destination": "/index.html" },
-    { "source": "/daily", "destination": "/index.html" },
-    { "source": "/life", "destination": "/index.html" }
+    { "source": "/scan", "destination": "/scan.html" },
+    { "source": "/daily", "destination": "/scan.html" },
+    { "source": "/life", "destination": "/scan.html" }
   ],
   "headers": [
     {
