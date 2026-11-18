@@ -8,7 +8,7 @@ const scenes=[
  {label:'The carry',line:'Move the context. Chase the answer.',sub:'Find the version. Hand it on.',film:'b2b-task-1.mp4'},
  {label:'Not just you',line:'Nobody assigned this job. Millions of us do it anyway.',sub:'We named it Digital Fog.',film:'fog-story.mp4'},
  {label:"What's missing",line:'The world built the generator.',sub:"It didn't build the spine.",film:'managing-digital-fog.mp4'},
- {label:'The crew',line:'Twenty years moving work between people.',sub:'Three years with AI. Not a demo. A colleague.',film:'erik-portrait.mp4'},
+ {label:'The crew',line:'New York, Miami, Boulder and LA. Moving work between people.',sub:'Three years with AI. Not a demo. A colleague.',film:'erik-portrait.mp4'},
  {label:'What we build',line:'We find the fog. We build the fix a home.',sub:'PROOF. BizBuilders. Daily Friction Check.',film:'proof-mood-3.mp4'},
  {label:'Momentum',line:'Room to build again.',sub:"Work keeps moving, your attention doesn't have to.",film:'ddd-r5-picture-sfx.mp4'}
 ];
