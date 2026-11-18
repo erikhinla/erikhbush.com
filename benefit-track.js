@@ -86,6 +86,6 @@ function mount(file){
 }
 
 const src = document.querySelector('script[src*="benefit-track.js"]');
-const url = (src ? src.src.replace(/benefit-track.js.*$/, 'benefit-track.json') : 'benefit-track.json') + '?v=sound';
+const url = src ? src.src.replace(/benefit-track.js.*$/, 'benefit-track.json') : 'benefit-track.json';
 fetch(url).then((r) => r.ok ? r.json() : Promise.reject()).then(mount).catch(() => {});
 })();

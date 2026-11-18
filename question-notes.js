@@ -19,7 +19,7 @@ window.QUESTION_NOTES = {
  },
  personal: {
   1: 'This is about the moment I try to begin. It separates starting conditions from what happens during the rest of my day.',
-  2: 'This asks about finding something I’ve already saved. It adds context about retrieval, which can help me choose a starting spot for DDD.',
+  2: 'This asks about finding something I’ve already saved. It adds context about retrieval, which can help me choose a starting spot for the Daily Friction Check.',
   3: 'This captures how the day feels when I put it down. It adds my experience of the day, rather than counting what I finished.',
   4: 'This asks about unfinished things I’m keeping track of. The number of open loops and where I keep them are different parts of that picture.',
   5: 'This follows an AI output into what happens next. It asks about my experience of using it, rather than how much the tool produced.',

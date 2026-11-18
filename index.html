@@ -1,116 +1,108 @@
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Erik H Bush · Prompting Circumstance</title>
-<meta name="description" content="We must learn to be human before systems learn to be gods. Real exchanges between Erik H Bush and AI, published as they happened.">
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Erik H Bush</title>
+<meta name="description" content="Your team adopted AI. Your infrastructure didn't. Erik H Bush builds the infrastructure that carries the work AI makes possible.">
 <link rel="alternate" type="application/rss+xml" title="Prompting Circumstance" href="/promptingcircumstance/rss.xml">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;1,9..144,300;1,9..144,500&family=Instrument+Sans:wght@400;500;600&display=swap">
 <style>
-/* The page is a conversation: his messages on the right in charcoal, the machine's on the left in white, and a highlighter where the human point is. */
-:root{--bg:#EEF1F2;--card:#FFFFFF;--ink:#16191B;--char:#383838;--soft:#5C6468;--line:#CCD3D6;--hi:#FFE84D;
- --sans:"Instrument Sans","Helvetica Neue",Arial,sans-serif;--serif:"Newsreader",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;--pad:clamp(18px,5vw,72px)}
+/* Design read: personal editorial portfolio for agency owners and the people who hire them; a gallery after hours. Dials 8 / 6 / 3.
+   One accent (brass), warm near-black walls, Fraunces from the Storm page, no cards, no eyebrows above every section. */
+:root{--wall:#0f100e;--wall2:#161713;--bone:#efebe0;--dim:#9c978a;--brass:#b8925a;--pad:clamp(20px,5vw,80px)}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased}
-a{color:inherit;text-underline-offset:4px}
-:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
-.skip{position:absolute;left:1rem;top:-4rem;background:var(--ink);color:#fff;padding:.5rem .8rem;z-index:5}
-.skip:focus{top:1rem}
-.mono{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--soft)}
-.wrap{max-width:1180px;margin:0 auto;padding:0 var(--pad)}
-header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 0;border-bottom:1px solid var(--line)}
-.mark{font-weight:700;font-size:22px;letter-spacing:-.04em;text-decoration:none}
-nav{display:flex;gap:6px;flex-wrap:wrap}
-nav a{display:inline-flex;align-items:center;min-height:44px;padding:0 12px;text-decoration:none;font-size:15px;font-weight:500}
-nav a:hover{text-decoration:underline}
-.hero{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,72px);align-items:center;padding:clamp(40px,8vh,96px) 0}
-h1{font-family:var(--serif);font-weight:400;font-size:clamp(40px,5.6vw,80px);line-height:1.02;letter-spacing:-.025em;text-wrap:balance;margin-top:14px}
-h1 em{font-style:italic}
-mark{background:linear-gradient(transparent 58%,var(--hi) 58%);color:inherit;padding:0 .08em}
-.who{margin-top:28px;display:flex;gap:16px;align-items:center}
-.who img{width:64px;height:64px;border-radius:50%;object-fit:cover;filter:grayscale(1)}
-.who p{font-size:16px;color:var(--soft);max-width:30em;text-wrap:pretty}
-.who b{color:var(--ink);font-weight:600}
-.chat{display:flex;flex-direction:column;gap:12px}
-.b{max-width:88%;padding:14px 18px;border-radius:20px;font-size:17px;line-height:1.4;text-wrap:pretty}
-.b .w{display:block;font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px;opacity:.7}
-.ai{align-self:flex-start;background:var(--card);border:1px solid var(--line);border-bottom-left-radius:6px}
-.me{align-self:flex-end;background:var(--char);color:#fff;border-bottom-right-radius:6px;font-weight:500}
-.read{align-self:stretch;margin-top:8px;padding-left:16px;border-left:3px solid var(--hi);font-family:var(--serif);font-style:italic;font-size:20px;line-height:1.35;text-wrap:pretty}
-section{padding:clamp(36px,6vh,72px) 0;border-top:1px solid var(--line)}
-h2{font-family:var(--serif);font-weight:400;font-size:clamp(30px,3.6vw,48px);line-height:1.05;letter-spacing:-.02em;margin-top:8px;text-wrap:balance}
-.sub{color:var(--soft);max-width:38em;margin-top:12px;text-wrap:pretty}
-.posts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:28px}
-.post{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px 22px 20px;display:flex;flex-direction:column;gap:12px;text-decoration:none;min-width:0}
-.post:hover{border-color:var(--ink)}
-.post .q{align-self:flex-end;background:var(--char);color:#fff;border-radius:16px;border-bottom-right-radius:5px;padding:10px 14px;font-size:15px;font-weight:500;line-height:1.35;max-width:92%}
-.post h3{font-family:var(--serif);font-weight:500;font-size:28px;line-height:1.05;letter-spacing:-.015em}
-.post p{color:var(--soft);font-size:15.5px;text-wrap:balance}
-.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,4vw,56px);align-items:start}
-.two p{margin-top:14px;max-width:32em;text-wrap:balance}
-.btn{display:inline-flex;align-items:center;min-height:52px;padding:0 22px;border-radius:26px;background:var(--char);color:#fff;text-decoration:none;font-weight:600;margin-top:20px}
-.btn.ghost{background:none;color:var(--ink);border:1px solid var(--ink)}
-footer{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:24px 0 40px;border-top:1px solid var(--line);font-size:14px;color:var(--soft)}
-footer a{display:inline-block;padding:10px 0;margin-left:16px}
-@media (max-width:820px){.hero,.two{grid-template-columns:1fr}.posts{grid-template-columns:1fr}.b{max-width:94%}nav{flex-wrap:nowrap;gap:0}nav a{padding:0 6px;font-size:13px;white-space:nowrap}header{gap:8px}}
-</style>
-</head>
-<body>
-<a class="skip" href="#main">Skip to content</a>
-<div class="wrap">
-<header>
-  <a class="mark" href="/" aria-label="Erik H Bush, home">ehb</a>
-  <nav aria-label="Site">
-    <a href="/promptingcircumstance">Prompting Circumstance</a>
-    <a href="/story">The story</a>
-    <a href="https://transformby10x.ai/">The work</a>
-  </nav>
-</header>
-<main id="main">
-<div class="hero">
-  <div>
-    <p class="mono">Erik H Bush · Prompting Circumstance</p>
-    <h1>We must learn to be <mark>human</mark> before systems learn to be <em>gods.</em></h1>
-    <div class="who"><img src="/assets/erik-portrait.jpg" alt="Erik H Bush" width="64" height="64"><p><b>Erik H Bush.</b> Agency operations on Madison Avenue since 2003. Now building with AI every day, and publishing the conversations as they happened.</p></div>
-  </div>
-  <div class="chat" aria-label="An exchange from Passing Notes">
-    <p class="mono">From “Passing Notes”</p>
-    <div class="b me"><span class="w">Erik</span>WHY. ISTHIS SO DIFFICULT TO DO???</div>
-    <div class="b ai"><span class="w">Claude</span>You're right, this shouldn't be this hard. It will come back with one step you can do yourself.</div>
-    <div class="b me"><span class="w">Erik</span>I'm SICK OF BEING IN THE MIDDLE PASSING NOTE</div>
-    <p class="read">When two agents can't reach each other, the human becomes the wire between them.</p>
-  </div>
-</div>
+html{background:var(--wall)}body{background:var(--wall);color:var(--bone);font-family:"Instrument Sans","Helvetica Neue",Arial,sans-serif;font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+a{color:inherit}:focus-visible{outline:2px solid var(--brass);outline-offset:4px}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:50;opacity:.07;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.serif{font-family:"Fraunces",Georgia,serif;font-optical-sizing:auto}
+nav{position:fixed;top:0;left:0;right:0;z-index:40;display:flex;justify-content:space-between;align-items:center;height:68px;padding:0 var(--pad);mix-blend-mode:difference}
+nav a{text-decoration:none;font-size:15px;font-weight:500;display:inline-flex;align-items:center;min-height:44px}nav .r{display:flex;gap:28px}
+.mark{font-family:"Fraunces",serif;font-size:24px;font-style:italic;letter-spacing:-.02em}
+/* 1. hero: the portrait is the hero, the mantra sits on his shoulder */
+.hero{position:relative;min-height:100dvh;display:grid;grid-template-columns:minmax(0,9fr) minmax(0,3fr);overflow:hidden}
+.hero video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:68% 22%;filter:grayscale(.35) contrast(1.05)}
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(90deg,var(--wall) 0%,rgba(15,16,14,.86) 34%,rgba(15,16,14,.2) 70%,transparent 100%),linear-gradient(0deg,var(--wall) 0%,transparent 28%)}
+.hc{position:relative;z-index:2;align-self:end;padding:0 var(--pad) clamp(56px,10vh,110px)}
+.hero h1{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(44px,5.4vw,88px);line-height:.96;letter-spacing:-.035em;max-width:17ch}
+.hero h1 em{font-style:italic;color:var(--brass)}
+.hero p{margin-top:28px;max-width:30em;color:#cfcabd;font-size:18px}
+.hero .sig{position:relative;z-index:2;align-self:end;justify-self:end;padding:0 var(--pad) clamp(56px,10vh,110px);text-align:right;font-size:14px;color:var(--dim);line-height:1.6}
+.hero .sig b{display:block;color:var(--bone);font-weight:500;font-size:15px}
+/* 2. the series: a real screenshot, tilted on the desk, with his line in his own words */
+.pc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:clamp(32px,6vw,110px);align-items:center;padding:clamp(100px,16vh,180px) var(--pad)}
+.shot{transform:rotate(-2.2deg);box-shadow:0 40px 80px -30px #000,0 0 0 1px #ffffff14;background:#1b1c18;padding:14px 14px 40px}
+.shot img{display:block;width:100%;height:auto}
+.shot figcaption{font-size:13px;color:var(--dim);margin-top:12px}
+.pc h2{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(38px,4.4vw,68px);line-height:1;letter-spacing:-.03em}
+.pc h2 em{font-style:italic}
+.quote{margin-top:34px;padding-left:22px;border-left:1px solid var(--brass);font-family:"Fraunces",serif;font-style:italic;font-size:clamp(20px,1.7vw,26px);line-height:1.35;color:#ddd8cb;max-width:28em}
+.pc p.s{margin-top:22px;color:var(--dim);max-width:34em}
+.index{margin-top:34px;display:grid;gap:0;border-top:1px solid #ffffff1a}
+.index a{display:flex;justify-content:space-between;gap:16px;align-items:baseline;padding:14px 0;border-bottom:1px solid #ffffff1a;text-decoration:none;font-family:"Fraunces",serif;font-size:22px;transition:color .3s,padding .3s cubic-bezier(.16,1,.3,1)}
+.index a span{font-family:"Instrument Sans",sans-serif;font-size:13px;color:var(--dim)}.index a:hover{color:var(--brass);padding-left:10px}
+/* 3. the gallery: pinned, slides sideways like walking a corridor */
+.gal{position:relative;height:100dvh;overflow:hidden;background:var(--wall2);display:flex;flex-direction:column}
+.gal .lead{position:relative;z-index:3;padding:clamp(80px,10vh,104px) var(--pad) 0;max-width:calc(32em + 2 * var(--pad))}
+.gal .lead h2{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(30px,3.2vw,48px);line-height:1.02;letter-spacing:-.02em}
+.gal .lead p{color:var(--dim);margin-top:10px;font-size:15px}
+.track{flex:1;display:flex;align-items:center;padding-bottom:40px;gap:clamp(36px,4vw,70px);padding:0 var(--pad);will-change:transform}
+.door{flex:0 0 auto;width:clamp(150px,14vw,220px);align-self:center;height:clamp(260px,40vh,380px);display:flex;flex-direction:column;justify-content:flex-end;border-left:1px solid var(--brass);padding:0 0 6px 18px}
+.rn{font-family:"Fraunces",serif;font-style:italic;font-size:clamp(64px,7vw,110px);line-height:.8;color:var(--brass)}.rt{font-size:15px;margin-top:14px;color:var(--bone)}
+.work{flex:0 0 auto;width:clamp(360px,42vw,700px);text-decoration:none;transform:rotate(var(--t));transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.work img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border:10px solid #2a2419;outline:1px solid #6b5a3c;box-shadow:0 30px 60px -28px #000,0 -18px 60px -30px rgba(184,146,90,.35)}
+.work .cap{display:flex;gap:12px;margin-top:16px;font-size:15px;line-height:1.3;max-width:26em}.work .cap i{font-style:normal;color:var(--brass);font-variant-numeric:tabular-nums}
+.work:hover{transform:rotate(0deg) translateY(-6px)}
+.prog{position:absolute;left:var(--pad);right:var(--pad);bottom:22px;height:1px;background:#ffffff1a}.prog i{display:block;height:100%;width:0;background:var(--brass)}
+/* 4. the film: one line through a window of moving picture */
+.film{position:relative;height:clamp(420px,78vh,820px);overflow:hidden;display:grid;place-items:center}
+.film video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.film::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(15,16,14,.25),rgba(15,16,14,.85) 80%)}
+.film p{position:relative;z-index:2;font-family:"Fraunces",serif;font-weight:300;font-size:clamp(30px,4.6vw,72px);line-height:1.02;letter-spacing:-.03em;text-align:center;max-width:16ch;padding:0 var(--pad)}
+.film p em{font-style:italic;color:var(--brass)}
+/* 5. the close: two doors */
+.close{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #ffffff1a}
+.close a{display:flex;flex-direction:column;justify-content:space-between;min-height:clamp(260px,40vh,420px);padding:clamp(28px,4vw,56px) var(--pad);text-decoration:none;transition:background .5s}
+.close a+a{border-left:1px solid #ffffff1a}.close a:hover{background:var(--wall2)}
+.close b{font-family:"Fraunces",serif;font-weight:300;font-size:clamp(34px,4vw,62px);line-height:1;letter-spacing:-.03em}.close b em{font-style:italic;color:var(--brass)}
+.close span{color:var(--dim);max-width:24em}
+footer{display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;padding:22px var(--pad) 34px;font-size:14px;color:var(--dim);border-top:1px solid #ffffff1a}footer a{display:inline-block;padding:10px 0;margin-left:18px}
+@media (max-width:820px){nav{mix-blend-mode:normal;background:rgba(15,16,14,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);height:56px}
+ .hero{grid-template-columns:1fr}.hero video{object-position:62% 18%}.hero::before{background:linear-gradient(0deg,var(--wall) 12%,rgba(15,16,14,.75) 50%,rgba(15,16,14,.15) 100%)}.hero .sig{display:none}.hero h1{font-size:clamp(42px,12vw,64px)}
+ nav .r{gap:14px}nav a{font-size:14px}
+ .pc{grid-template-columns:1fr}.shot{transform:rotate(-1.4deg)}
+ .gal{height:auto;padding:110px 0 60px}.gal .lead{padding:0 var(--pad) 28px}.track{flex-direction:column;align-items:stretch;transform:none!important;gap:30px}.door{border-left:0;border-top:1px solid var(--brass);padding:18px 0 0;width:auto;height:auto;flex-direction:row;align-items:baseline;gap:16px}.rn{font-size:56px}.rt{margin:0}.work{width:auto;transform:none}.prog{display:none}
+ .close{grid-template-columns:1fr}.close a+a{border-left:0;border-top:1px solid #ffffff1a}
+}
+@media (prefers-reduced-motion:reduce){video{display:none}.work,.index a{transition:none}}
+.hero .go{display:flex;gap:28px;margin-top:34px;flex-wrap:wrap}.hero .go a{color:var(--bone);font-size:15px;text-decoration:none;border-bottom:1px solid var(--brass);padding-bottom:4px}.hero .go a.solid{background:var(--bone);color:var(--wall);border:0;padding:12px 20px}.hero .q{font-style:italic}</style></head><body>
+<nav aria-label="Site"><a class="mark" href="/">ehb</a><span class="r"><a href="/promptingcircumstance">Prompting Circumstance</a><a href="/story">Story</a><a href="https://transformby10x.ai/">The work</a></span></nav>
+<main>
+<section class="hero"><video autoplay muted loop playsinline poster="/assets/erik-portrait.jpg"><source src="/assets/erik-portrait.mp4" type="video/mp4"></video>
+<div class="hc"><h1>Your team adopted AI. Your <em>infrastructure</em> didn't.</h1><p>AI makes more work possible than traditional BizOps can carry. I build the infrastructure that carries it.</p><div class="go"><a href="#gallery">Walk the decks</a><a href="https://transformby10x.ai/proof">Take PROOF</a></div></div>
+<div class="sig"><b>Erik H Bush</b>Infrastructure before intelligence<br>Agencies in New York, Miami, Boulder and LA</div></section>
 
-<section aria-labelledby="pc">
-  <p class="mono">The series</p>
-  <h2 id="pc">Real exchanges. Typos left in.</h2>
-  <p class="sub">Each post starts from a screenshot of me and an AI getting it wrong. Then it asks what the machine would say about the human, what the human actually meant, and how the two meet.</p>
-  <div class="posts">
-    <a class="post" href="/promptingcircumstance/passing-notes"><span class="mono">7 Oct 2026</span><span class="q">I'm SICK OF BEING IN THE MIDDLE PASSING NOTE</span><h3>Passing Notes</h3><p>When two AI agents can't reach each other, the human becomes the wire between them. That is not delegation.</p></a>
-    <a class="post" href="/promptingcircumstance/send-me-the-link"><span class="mono">7 Oct 2026</span><span class="q">I Didn't see a mockup is there one?</span><h3>Send Me the Link</h3><p>The fix was done and the preview was live. An operator should get the thing itself, not instructions for finding it.</p></a>
-    <a class="post" href="/promptingcircumstance/build-off-the-foundation"><span class="mono">7 Oct 2026</span><span class="q">waiting on "approved decisions" what workflow is that, huh?</span><h3>Build Off the Foundation</h3><p>Forty pages of approved decisions, and the AI still asked which option I preferred.</p></a>
-    <a class="post" href="/promptingcircumstance/just-stay-silent"><span class="mono">28 Sep 2026</span><span class="q">I will decide how you fit into this team but you make it impossible to work with.</span><h3>Just Stay Silent</h3><p>When an AI spends your usage narrating its own failure back to you.</p></a>
-  </div>
-</section>
+<section class="pc"><figure class="shot"><img src="/promptingcircumstance/images/just-stay-silent.png" alt="ChatGPT narrating its own failure instead of doing the work" loading="lazy"><figcaption>From “Just Stay Silent.” The screenshot, unedited.</figcaption></figure>
+<div><h2 class="serif">Prompting <em>Circumstance</em></h2><p class="quote">“I will decide how you fit into this team but you make it impossible to work with.”</p><p class="s">Real exchanges with AI, typos left in. Each one asks what the human actually meant.</p>
+<div class="index"><a href="/promptingcircumstance/passing-notes">Passing Notes<span>Oct 2026</span></a><a href="/promptingcircumstance/send-me-the-link">Send Me the Link<span>Oct 2026</span></a><a href="/promptingcircumstance/build-off-the-foundation">Build Off the Foundation<span>Oct 2026</span></a><a href="/promptingcircumstance/just-stay-silent">Just Stay Silent<span>Sep 2026</span></a></div></div></section>
 
-<section aria-labelledby="st">
-  <div class="two">
-    <div><p class="mono">The story</p><h2 id="st">Twenty years of handoffs. Three years with AI on the crew.</h2></div>
-    <div><p>Marketing operations and project management taught me where handoffs break. Building with AI showed me the same breaks, happening faster.</p><p>The story page has the long version, and the work on the walls.</p><a class="btn ghost" href="/story">Read the story</a></div>
-  </div>
-</section>
+<section class="gal" id="gallery"><div class="lead"><h2>Fourteen decks, walked in order.</h2><p>From the job AI created to the structure that carries it.</p></div><div class="track"><div class="door"><span class="rn">I</span><span class="rt">What AI created</span></div><a class="work" style="--t:0.8deg" href="/story#hang-architecting"><img src="/assets/studio/14/cover.jpg" alt="AI Created a Job. (Nobody wanted.)" loading="lazy"><span class="cap"><i>01</i>AI Created a Job. (Nobody wanted.)</span></a><a class="work" style="--t:-0.4deg" href="/story#hang-fog"><img src="/assets/studio/5/cover.jpg" alt="The leftover job, named" loading="lazy"><span class="cap"><i>02</i>The leftover job, named</span></a><a class="work" style="--t:1.1deg" href="/story#hang-shadow"><img src="/assets/studio/3/cover.jpg" alt="What people carry" loading="lazy"><span class="cap"><i>03</i>What people carry</span></a><a class="work" style="--t:-1.2deg" href="/story#hang-order"><img src="/assets/studio/8/cover.jpg" alt="Your tools didn’t remove the work." loading="lazy"><span class="cap"><i>04</i>Your tools didn’t remove the work.</span></a><div class="door"><span class="rn">II</span><span class="rt">Where it breaks</span></div><a class="work" style="--t:0.8deg" href="/story#hang-forensic"><img src="/assets/studio/9/cover.jpg" alt="Most AI programs fail in the handoff." loading="lazy"><span class="cap"><i>05</i>Most AI programs fail in the handoff.</span></a><a class="work" style="--t:-0.4deg" href="/story#hang-overview"><img src="/assets/studio/6/cover.jpg" alt="PROOF, in three pages" loading="lazy"><span class="cap"><i>06</i>PROOF, in three pages</span></a><div class="door"><span class="rn">III</span><span class="rt">The spine</span></div><a class="work" style="--t:1.1deg" href="/story#hang-backbone"><img src="/assets/studio/11/cover.jpg" alt="The spine under the work" loading="lazy"><span class="cap"><i>07</i>The spine under the work</span></a><a class="work" style="--t:-1.2deg" href="/story#hang-flow"><img src="/assets/studio/10/cover.jpg" alt="The path the work takes" loading="lazy"><span class="cap"><i>08</i>The path the work takes</span></a><a class="work" style="--t:0.8deg" href="/story#hang-architecture"><img src="/assets/studio/4/cover.jpg" alt="From fog to governed execution" loading="lazy"><span class="cap"><i>09</i>From fog to governed execution</span></a><a class="work" style="--t:-0.4deg" href="/story#hang-ops"><img src="/assets/studio/7/cover.jpg" alt="Few govern what happens next." loading="lazy"><span class="cap"><i>10</i>Few govern what happens next.</span></a><div class="door"><span class="rn">IV</span><span class="rt">Running it</span></div><a class="work" style="--t:1.1deg" href="/story#hang-momentum"><img src="/assets/studio/0/cover.jpg" alt="Where work gets a spine" loading="lazy"><span class="cap"><i>11</i>Where work gets a spine</span></a><a class="work" style="--t:-1.2deg" href="/story#hang-governed"><img src="/assets/studio/2/cover.jpg" alt="The path to done" loading="lazy"><span class="cap"><i>12</i>The path to done</span></a><a class="work" style="--t:0.8deg" href="/story#hang-agentic"><img src="/assets/studio/12/cover.jpg" alt="Vercel executes. FLOW dictates the rules." loading="lazy"><span class="cap"><i>13</i>Vercel executes. FLOW dictates the rules.</span></a><a class="work" style="--t:-0.4deg" href="/story#hang-operator"><img src="/assets/studio/1/cover.jpg" alt="How the work keeps moving" loading="lazy"><span class="cap"><i>14</i>How the work keeps moving</span></a></div><div class="prog" aria-hidden="true"><i></i></div></section>
 
-<section aria-labelledby="wk">
-  <div class="two">
-    <div><p class="mono">The work</p><h2 id="wk">What I built from all of this.</h2></div>
-    <div><p>TransformBy10X is the business side. It starts with PROOF: 15 answers that show an agency where work stalls and what it costs.</p><a class="btn" href="https://transformby10x.ai/">See the work</a></div>
-  </div>
-</section>
+<section class="film"><video autoplay muted loop playsinline poster="/assets/b2c-laser.jpg"><source src="/assets/b2c-laser.mp4" type="video/mp4"></video><p>The fog is what work feels like when nobody carries the <em>context.</em></p></section>
+
+<section class="close"><a href="/story"><b>The <em>story</em></b><span>Four cities, the same handoffs stalling in every one, and the work on the walls.</span></a><a href="https://transformby10x.ai/"><b>The <em>work</em></b><span>TransformBy10X. It starts with PROOF: 15 answers that show where work stalls.</span></a></section>
 </main>
-<footer><span>© 2026 Erik H Bush</span><span><a href="/promptingcircumstance/rss.xml">RSS</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></span></footer>
-</div>
-</body>
-</html>
+<footer><span>© 2026 Erik H Bush</span><span><a href="/thestorm">The Storm</a><a href="/promptingcircumstance/rss.xml">RSS</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a></span></footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function(){
+  if(!window.gsap||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  gsap.registerPlugin(ScrollTrigger);
+  ScrollTrigger.matchMedia({"(min-width: 821px)":function(){
+    var wrap=document.querySelector('.gal'),track=document.querySelector('.track'),bar=document.querySelector('.prog i');
+    var dist=function(){return track.scrollWidth-innerWidth};
+    gsap.to(track,{x:function(){return -dist()},ease:'none',scrollTrigger:{trigger:wrap,start:'top top',end:function(){return '+='+dist()},pin:true,scrub:1,invalidateOnRefresh:true,onUpdate:function(s){bar.style.width=(s.progress*100)+'%'}}});
+  }});
+  gsap.from('.hc h1',{y:40,opacity:0,duration:1.2,ease:'power3.out'});
+  gsap.from('.shot',{scrollTrigger:{trigger:'.pc',start:'top 75%'},y:60,rotate:-6,opacity:0,duration:1.1,ease:'power3.out'});
+})();
+</script>
+</body></html>

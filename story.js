@@ -8,15 +8,15 @@ const scenes=[
  {label:'The carry',line:'Move the context. Chase the answer.',sub:'Find the version. Hand it on.',film:'b2b-task-1.mp4'},
  {label:'Not just you',line:'Nobody assigned this job. Millions of us do it anyway.',sub:'We named it Digital Fog.',film:'fog-story.mp4'},
  {label:"What's missing",line:'The world built the generator.',sub:"It didn't build the spine.",film:'managing-digital-fog.mp4'},
- {label:'The crew',line:'Twenty years moving work between people.',sub:'Three years with AI. Not a demo. A colleague.',film:'erik-portrait.mp4'},
- {label:'What we build',line:'We find the fog. We build the fix a home.',sub:'PROOF. BizBuilders. Digital De-Fog Daily.',film:'proof-mood-3.mp4'},
+ {label:'The crew',line:'New York, Miami, Boulder and LA. Moving work between people.',sub:'Three years with AI. Not a demo. A colleague.',film:'erik-portrait.mp4'},
+ {label:'What we build',line:'We find the fog. We build the fix a home.',sub:'PROOF. BizBuilders. Daily Friction Check.',film:'proof-mood-3.mp4'},
  {label:'Momentum',line:'Room to build again.',sub:"Work keeps moving, your attention doesn't have to.",film:'ddd-r5-picture-sfx.mp4'}
 ];
 let chapter=0,playing=false,timer=null,trigger=null,readMode=false,soundOn=false,cardSlot=0,cardWanted='';
 const decks=[
  {title:'Architecting AI Momentum',count:15,file:'Architecting_AI_Momentum.pdf',note:'Working concept deck. Its model, pricing and outcome illustrations are not measured client results or a live offer.',notes:{5:'This slide shows a source-deck model. It is not the current Map scoring rule or a calibrated operational measurement.',11:'These are source-deck pricing concepts, not current offers or checkout prices.',13:'The supplied Google screenshot records program membership, not professional certification or endorsement.'}},
  {title:'The operator archive',count:13,file:'FLOW_AS_2.0_Operator_Manual.pdf',note:'Architecture archive. Agent assignments, model names and claims of live or autonomous operation are source-deck descriptions, not runtime verification.',notes:{}},
- {title:'Governed Execution',count:15,file:'Governed_Execution.pdf',note:'Working architecture deck. Original wording is preserved; current site copy uses PROOF Finder and Digital De-Fog Daily.',notes:{}},
+ {title:'Governed Execution',count:15,file:'Governed_Execution.pdf',note:'Working architecture deck. Original wording is preserved; current site copy uses PROOF Finder and Daily Friction Check.',notes:{}},
  {title:'Governing AI Shadow Work',count:15,file:'Governing_AI_Shadow_Work.pdf',note:'Concept and research framing. Illustrations and diagnostic language are not a clinical diagnosis or measured client results.',notes:{12:'This slide records design principles from the deck; it does not describe a verified client result.'}},
  {title:'The Architecture of AI-Native Operations',count:13,file:'The_Architecture_of_AI_Native_Operations.pdf',note:'Working concept deck. Ecosystem Canon v2026.07. Sequence, offers and illustrations are source-deck descriptions, not measured client results or a live offer.',notes:{}},
  {title:'Managing Digital Fog',count:15,file:'Managing_Digital_Fog.pdf',note:'Working concept deck. Diagnosis of digital fog and the leftover job. Illustrations are not measured client results or a live offer.',notes:{}},
