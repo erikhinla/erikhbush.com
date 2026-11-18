@@ -78,7 +78,8 @@ const SOUND_FILM={
   'b2b-task-6-world.mp4':'b2b-task-6.mp4',
   'proof-world.mp4':'proof-mood-3.mp4'
 };
-const videos=[$('#world-a'),$('#world-b')].filter(Boolean);videos.forEach(v=>{v.autoplay=!reduced;v.muted=true;v.playsInline=true;const file=(v.getAttribute('src')||'').split('/').pop().split('?')[0];if(file)v.dataset.file=file;});let version=0,wanted='',activeScene=null,modalFilm=null,soundOn=false,bed=null;
+const videos=[$('#world-a'),$('#world-b')].filter(Boolean);videos.forEach(v=>{v.autoplay=!reduced;v.muted=true;v.playsInline=true;const file=(v.getAttribute('src')||'').split('/').pop();if(file)v.dataset.file=file;});let version=0,wanted='',activeScene=null,modalFilm=null,soundOn=false,bed=null;
+try{soundOn=sessionStorage.getItem('tbtx-sound')==='on';}catch{}
 function ensureBed(){
   if(bed)return bed;
   bed=document.createElement('video');
@@ -98,21 +99,22 @@ function stopBed(){
   bed.muted=true;
 }
 function liveWorld(){return videos.find(v=>v.classList.contains('visible')&&v.dataset.file)||videos.find(v=>v.dataset.file)||videos[0];}
-function paintMute(v,on){
-  v.muted=!on;
-  v.defaultMuted=!on;
-  if(on){v.removeAttribute('muted');v.volume=1;}
-  else v.setAttribute('muted','');
-}
 function syncBed(name){
-  stopBed();
-  videos.forEach(v=>{
-    const on=!!(soundOn && name && name!=='off' && v.classList.contains('visible'));
-    paintMute(v,on);
-    if(!on || !v.src || document.hidden)return;
-    const p=v.play();
-    if(p&&p.catch)p.catch(()=>{});
-  });
+  const live=liveWorld();
+  videos.forEach(v=>{v.muted=true;});
+  if(!soundOn||!name||name==='off'){stopBed();return;}
+  const mapped=SOUND_FILM[name];
+  if(!mapped){stopBed();return;}
+  const b=ensureBed();
+  const url=media(mapped);
+  if(b.dataset.file!==mapped){
+    b.dataset.file=mapped;
+    b.src=url;
+    b.load();
+  }
+  b.muted=false;
+  b.volume=1;
+  b.play().catch(()=>{});
 }
 function applySound(){
   const scene=wanted||activeScene?.dataset.world||'';
@@ -126,6 +128,7 @@ function applySound(){
 }
 function setSound(on){
   soundOn=!!on;
+  try{sessionStorage.setItem('tbtx-sound',soundOn?'on':'');}catch{}
   applySound();
 }
 function changeWorld(name,light=.8,crop){
@@ -161,7 +164,7 @@ function changeWorld(name,light=.8,crop){
  next.setAttribute('preload','auto');
  next.muted=true;next.defaultMuted=true;next.setAttribute('muted','');next.loop=true;next.playsInline=true;next.setAttribute('playsinline','');next.setAttribute('webkit-playsinline','');
  next.poster='assets/'+(name==='proof-world.mp4'?'proof-mood-3':name.replace('.mp4',''))+'.jpg';
- next.src=media(name)+(name==='b2c-hero.mp4'?'?v=b':(name==='defog-daily-hero.mp4'?'?v=c':''));
+ next.src=media(name);
  let shown=false;
  const reveal=()=>{
   if(token!==version||shown)return;
@@ -238,7 +241,7 @@ function coverPage(on){
 function modalWorld(){const opened=$$('dialog[open]'),topId=modalStack.at(-1)?.id,d=opened.find(x=>x.id===topId)||opened.at(-1);opened.forEach(x=>x.classList.toggle('behind-dialog',x!==d));if(!d){modalFilm=null;updateWorld();return;}
  if(d.id==='questionnaire'&&state.lane==='personal'){
   if(state.showingResult){modalFilm='defog-daily-hero.mp4';changeWorld(modalFilm,.92);return;}
-  modalFilm='desk-fog-loop.mp4';changeWorld(modalFilm,.72);return;
+  modalFilm='fog-story.mp4';changeWorld(modalFilm,.72);return;
  }
  const film=modalVideos[d.id];if(film==='off'){modalFilm='off';changeWorld('off',0);return;}modalFilm=film||activeScene?.dataset.world||null;if(!modalFilm){updateWorld();return;}const bright=['map-intro','ddd-intro'].includes(d.id)?.88:.58;const crop=d.id==='about'?'50% 18%':undefined;changeWorld(modalFilm,bright,crop);}
 function open(id,trigger=document.activeElement){if(id==='trace'&&!state.traceDone){beginTrace();return;}if(!document.documentElement.classList.contains('is-sheet')) lastScroll=window.scrollY||document.documentElement.scrollTop||0;if(id==='gallery')buildHang();const d=$('#'+id);if(!d)return;lastTrigger=trigger;if(!d.open){modalStack.push({id,trigger});d.classList.remove('behind-dialog');try{d.showModal();}catch{d.setAttribute('open','');}}coverPage(true);document.documentElement.style.overflow='hidden';modalWorld();d.scrollTop=0;requestAnimationFrame(()=>d.querySelector('h2')?.focus({preventScroll:true}));}
@@ -342,7 +345,7 @@ const SCANOUT={
  'Carrying it':{
   pattern:'The day does not sit down as one thing. What you meant to do waits while you hunt, rewrite, and hold unfinished loops in your head.',
   pressure:'You are the filing system. If the phone went down, the map would go with it.',
-  repair:'Picking one surface and making one thing findable. That is where the daily starts. It is not the whole day.'
+  repair:'Picking one surface and making one thing findable. That is where the fog sits. It is not the whole day.'
  },
  'Clear enough':{
   pattern:'You can put a hand on the thing. The leftover work still exists, and it has a place.',
@@ -353,7 +356,7 @@ const SCANOUT={
 function renderScan(r,qs){
  const voice=SCANOUT[r.band]||SCANOUT['Carrying it'];
  const math=`<details class="result-math"><summary>The answer arithmetic</summary><div class="score-number">${r.result}<small>/100</small></div><p class="result-formula">round(100 × ${r.raw} ÷ ${r.max}) = ${r.result}</p><p>Carrying it 0-49 · Clear enough 50-100.</p><p>This reflects the answers given. It isn't measured productivity, hours saved or a diagnosis.</p><details><summary>The answers, one by one</summary>${qs.map((q,i)=>`<div class="answer-record"><strong>${q.id}. ${escape(q.text)}</strong><p>${escape(q.options[state.selections[i]].text)}</p><small>${pointLabel(r.values[i])}</small></div>`).join('')}</details></details>`;
- return `<div class="readout scan-handoff"><h2 id="question-title" tabindex="-1">The starting point</h2><p class="said">${sayPersonal(qs,state.selections)}</p><p class="ev">Reported. Those are your selections. Nothing was added.</p><div class="trace-step"><b>The pattern</b><p>${voice.pattern}</p></div><div class="trace-step"><b>The pressure</b><p>${voice.pressure}</p></div><div class="trace-step"><b>The likely human repair</b><p>${voice.repair}</p></div><p class="readout-close">This is what you reported, not what we measured.</p>${math}<div class="result-ctas"><button class="action lane-life" id="result-next">Start Digital De-Fog Daily <span class="arr" aria-hidden="true"></span></button></div><button class="text-action" id="review-answers">Review answers <i class="arr" aria-hidden="true"></i></button></div>`;
+ return `<div class="readout scan-handoff"><h2 id="question-title" tabindex="-1">Where the fog sits</h2><p class="said">${sayPersonal(qs,state.selections)}</p><p class="ev">Reported. Those are your selections. Nothing was added.</p><div class="trace-step"><b>The pattern</b><p>${voice.pattern}</p></div><div class="trace-step"><b>The pressure</b><p>${voice.pressure}</p></div><div class="trace-step"><b>The likely human repair</b><p>${voice.repair}</p></div><p class="readout-close">This is what you reported, not what we measured.</p>${math}<div class="result-ctas"><button class="action lane-life" id="result-next">Start Digital De-Fog Daily <span class="arr" aria-hidden="true"></span></button></div><button class="text-action" id="review-answers">Review answers <i class="arr" aria-hidden="true"></i></button></div>`;
 }
 function renderReadout(r,qs){
  const voice=READOUT[r.band]||READOUT.Stalled;
@@ -369,7 +372,7 @@ function renderResult(){const r=score(state.lane,state.selections);if(!r)return;
   $('#question-body').innerHTML=renderReadout(r,qs);
  }else{
   $('#questionnaire')?.classList.add('is-handoff');
-  $('#question-lane').textContent='Digital Fog Scan / The starting point';
+  $('#question-lane').textContent='Digital Fog Scan / Where the fog sits';
   $('#question-body').innerHTML=renderScan(r,qs);
  }
  $('#result-next').onclick=()=>{close('questionnaire');if(state.lane==='business')open('trace');else window.DDD.open();};$('#review-answers').onclick=()=>{state.step=0;renderQuestion();focusQuestion();};modalWorld();focusQuestion();}
@@ -454,7 +457,7 @@ const studioMore=[
  {when:'PROOF',claim:'From fog to architecture',title:'Fog and friction, then a spine',cover:'assets/proof-to-architecture.jpg',href:'/story#hang-spine'},
  {when:'PROOF',claim:'The repair nobody named',title:'Hidden human repair',cover:'assets/hidden-repair-load.jpg',href:'/story#hang-repair'},
  {when:'BizBuilders',claim:'Where the fix lives',title:'BBAI momentum',cover:'assets/bbai-momentum-loop.jpg',href:'/story#hang-bbai'},
- {when:'Archive',claim:'A kit that lifts the fog',title:'Before Digital De-Fog Daily',cover:'assets/fog-lift-kit.jpg',href:'/story#hang-kit'},
+ {when:'Campaign',claim:'A kit that lifts the fog',title:'Fog Lift Kit',cover:'assets/fog-lift-kit.jpg',href:'/story#hang-kit'},
  {when:'Process',claim:'What happens when the glue snaps',title:'Computer explodes',cover:'assets/computer-explodes.jpg',href:'/story#hang-explodes'},
  {when:'Satire',claim:'The fog, with the joke left in',title:'Digital Fog satire',cover:'assets/satire-digital-fog.jpg',href:'/story#hang-satire'}
 ];
@@ -499,7 +502,7 @@ document.addEventListener('click',e=>{
  crop.appendChild(frame);
  door.replaceWith(crop);
 });
-const galleryItems=[['The handoff','proof-mood-3.mp4','Where the context actually drops.'],['How PROOF finds the fog','proof-mood-2.mp4','The leftover job, on film.'],['PROOF / First cut','proof-mood-1.mp4','Before the method had a name.'],['Checking the code','b2b-task-1.mp4','Auditing code nobody on staff wrote.'],['Content strategy','b2b-task-2.mp4','Holding the story still.'],['Conflicting outputs','b2b-task-3.mp4','What two AI agents disagreeing looks like.'],['Choosing a logo','b2b-task-4.mp4','Picking a logo without a design team.'],['The final summary','b2b-task-5.mp4','What the work actually said.'],['Keeping strategy in view','b2b-task-6.mp4','The plan that has to stay in the room.'],['Where the work comes back','b2b-task-6-world.mp4','Before the name was PROOF.'],['Digital De-Fog Daily','defog-daily-hero.mp4','The fog leaves. Twenty minutes.'],['The concept artwork',null,'Some labels predate Finder.'],['The origin lockup','ai-created-a-job.mp4','AI created a job. Nobody wanted it.'],['Desk fog','desk-fog-loop.mp4','The leftover job, looping.'],['Fog to architecture','proof-to-architecture.mp4','From fog to architecture.'],['Hidden repair','hidden-repair-load.mp4','The repair nobody named.'],['BBAI momentum','bbai-momentum-loop.mp4','Where the fix lives.'],['Before Digital De-Fog Daily','fog-lift-kit.mp4','A kit that lifts the fog.'],['Computer explodes','computer-explodes.mp4','What happens when the glue snaps.'],['Digital Fog satire','satire-digital-fog.mp4','The fog, with the joke left in.']];
+const galleryItems=[['The handoff','proof-mood-3.mp4','Where the context actually drops.'],['How PROOF finds the fog','proof-mood-2.mp4','The leftover job, on film.'],['PROOF / First cut','proof-mood-1.mp4','Before the method had a name.'],['Checking the code','b2b-task-1.mp4','Auditing code nobody on staff wrote.'],['Content strategy','b2b-task-2.mp4','Holding the story still.'],['Conflicting outputs','b2b-task-3.mp4','What two AI agents disagreeing looks like.'],['Choosing a logo','b2b-task-4.mp4','Picking a logo without a design team.'],['The final summary','b2b-task-5.mp4','What the work actually said.'],['Keeping strategy in view','b2b-task-6.mp4','The plan that has to stay in the room.'],['The Map','b2b-task-6-world.mp4','Where the work comes back.'],['Digital De-Fog Daily','defog-daily-hero.mp4','The fog leaves. Twenty minutes.'],['The concept artwork',null,'Some labels predate Finder.'],['The origin lockup','ai-created-a-job.mp4','AI created a job. Nobody wanted it.'],['Desk fog','desk-fog-loop.mp4','The leftover job, looping.'],['Fog to architecture','proof-to-architecture.mp4','From fog to architecture.'],['Hidden repair','hidden-repair-load.mp4','The repair nobody named.'],['BBAI momentum','bbai-momentum-loop.mp4','Where the fix lives.'],['Fog Lift Kit','fog-lift-kit.mp4','A kit that lifts the fog.'],['Computer explodes','computer-explodes.mp4','What happens when the glue snaps.'],['Digital Fog satire','satire-digital-fog.mp4','The fog, with the joke left in.']];
 $('#gallery-nav') && ($('#gallery-nav').innerHTML=galleryItems.map((a,i)=>`<button data-gallery="${i}">${a[0]}</button>`).join(''));function chooseGallery(i){const item=galleryItems[i],v=$('#gallery-film');if(!v)return;v.pause();$$('[data-gallery]').forEach(b=>b.setAttribute('aria-pressed',String(Number(b.dataset.gallery)===i)));v.hidden=!item[1];const art=$('#gallery-art');if(art)art.hidden=!!item[1];if(item[1])v.src=media(item[1]);else v.removeAttribute('src');const cap=$('#gallery-caption');if(cap)cap.textContent=item[2];}
 $$('[data-gallery]').forEach(b=>b.onclick=()=>chooseGallery(Number(b.dataset.gallery)));$('#gallery-film').addEventListener('play',()=>videos.forEach(v=>v.pause()));$('#gallery-film').addEventListener('pause',()=>{if($('#gallery').open&&!document.hidden&&!reduced)liveWorld()?.play().catch(()=>{});});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)$$('video').forEach(v=>v.pause());else if($('#world').dataset.scene!=='off'&&!($('#gallery').open&&!$('#gallery-film').paused)){ensurePlay(liveWorld());$$('.fog-stack video,.route-lane video').forEach(ensurePlay);syncBed(wanted||activeScene?.dataset.world);}});
@@ -516,10 +519,8 @@ let tapX=0,tapY=0;
 document.addEventListener('pointerdown',e=>{tapX=e.clientX;tapY=e.clientY;},{passive:true});
 function ensurePlay(v){
   if(!v)return;
-  const world=v.id==='world-a'||v.id==='world-b';
-  paintMute(v, world && soundOn && v.classList.contains('visible'));
-  v.autoplay=true;v.loop=true;v.playsInline=true;
-  v.setAttribute('autoplay','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');
+  v.defaultMuted=true;v.muted=true;v.autoplay=true;v.loop=true;v.playsInline=true;
+  v.setAttribute('muted','');v.setAttribute('autoplay','');v.setAttribute('playsinline','');v.setAttribute('webkit-playsinline','');
   if(!v.src||document.hidden)return;
   const go=()=>{if(document.hidden||!v.src)return;const p=v.play();if(p&&p.catch)p.catch(()=>{});};
   go();
