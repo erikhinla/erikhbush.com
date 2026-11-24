@@ -460,6 +460,11 @@ const studioMore=[
 ];
 const hangRooms=[
  {q:'The rooms · newest first',works:[
+  {when:'Nov 2026',claim:'The tools work. The context doesn’t.',title:'The AI Context Gap',cover:'assets/studio/16/cover.jpg',href:'/story#hang-context-gap'},
+  {when:'Nov 2026',claim:'Output is free. Momentum is stalled.',title:'Workflow Forensics',cover:'assets/studio/17/cover.jpg',href:'/story#hang-workflow-forensics'},
+  {when:'Oct 2026',claim:'The bottleneck isn’t the model. It’s context.',title:'Why Businesses Need Context Architecture',cover:'assets/studio/15/cover.jpg',href:'/story#hang-context-architecture'},
+  {when:'Oct 2026',claim:'Faster engines on a broken track just pile up faster.',title:'Fixing AI Friction',cover:'assets/studio/18/cover.jpg',href:'/story#hang-fixing-friction'},
+  {when:'Oct 2026',claim:'When AI outpaces infrastructure.',title:'AI-Aligned Ops',cover:'assets/studio/19/cover.jpg',href:'/story#hang-aligned-ops'},
   {when:'Sept 2026',claim:'AI Created a Job. (Nobody wanted.)',title:'Architecting Momentum',cover:'assets/studio/14/cover.jpg',href:'/story#hang-architecting'},
   {when:'Sept 2026',claim:'Where work gets a spine',title:'Architecting AI Momentum',cover:'assets/studio/0/cover.jpg',href:'/story#hang-momentum'},
   {when:'Sept 2026',claim:'Vercel executes. FLOW dictates the rules.',title:'The Enterprise Agentic OS',cover:'assets/studio/12/cover.jpg',href:'/story#hang-agentic'},

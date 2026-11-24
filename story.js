@@ -27,7 +27,12 @@ const decks=[
  {title:'Engineering Operational Flow',count:15,file:'Engineering_Operational_Flow.pdf',note:'Working architecture deck. Source-deck descriptions, not a connected client runtime.',notes:{}},
  {title:'The Operating Backbone',count:14,file:'The_Operating_Backbone.pdf',note:'Working architecture deck. Source-deck descriptions, not a live operating system.',notes:{}},
  {title:'The Enterprise Agentic OS',count:13,file:'The_Enterprise_Agentic_OS.pdf',note:'Working architecture deck. FLOW Agent AS with Vercel agentic infrastructure. Source-deck descriptions, not a connected client runtime.',notes:{}},
- {title:'Architecting Momentum',count:14,folder:14,file:'Architecting_Momentum.pdf',note:'Campaign deck. AI created a job nobody wanted. Source-deck descriptions, not a live offer or measured client result.',notes:{}}
+ {title:'Architecting Momentum',count:14,folder:14,file:'Architecting_Momentum.pdf',note:'Campaign deck. AI created a job nobody wanted. Source-deck descriptions, not a live offer or measured client result.',notes:{}},
+ {title:'Why Businesses Need Context Architecture',count:15,folder:15,file:'Why_Businesses_Need_Context_Architecture.pdf',note:'Working concept deck. Illustrations are not measured client results or a live offer.',notes:{}},
+ {title:'The AI Context Gap',count:18,folder:16,file:'The_AI_Context_Gap.pdf',note:'Working concept deck. Illustrations are not measured client results or a live offer.',notes:{}},
+ {title:'Workflow Forensics',count:14,folder:17,file:'Workflow_Forensics.pdf',note:'Working concept deck. Illustrations are not measured client results or a live offer.',notes:{}},
+ {title:'Fixing AI Friction',count:10,folder:18,file:'Fixing_AI_Friction.pdf',note:'Working concept deck. Illustrations are not measured client results or a live offer.',notes:{}},
+ {title:'AI-Aligned Ops',count:15,folder:19,file:'AI-Aligned_Ops.pdf',note:'Working concept deck. Illustrations are not measured client results or a live offer.',notes:{}}
 ];
 let deck=0,page=0;
 function background(){if(document.hidden||$$('dialog[open]').length||reduced)portrait.pause();else portrait.play().catch(()=>{});}
